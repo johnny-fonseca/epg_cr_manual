@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gente OPA · Transmisión en vivo</title>
+<title>Probador universal de URLs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
@@ -107,7 +107,18 @@
   .more-body{display:grid;grid-template-columns:1.35fr 1fr;gap:36px;padding:4px 22px 26px}
   .more h2{font-size:.9rem;font-weight:600;margin:0 0 12px}
   .row{display:flex;gap:8px;flex-wrap:wrap}
-  .row input[type=url]{flex:1;min-width:220px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:.9rem}
+  .row input[type=text]{flex:1;min-width:220px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;font-size:.9rem}
+  .row select{background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:0 12px;font:inherit;font-size:.9rem;min-height:44px}
+  .row select option{background:#1b1625;color:#f4f1f8}
+  .urlbar{margin:0 0 6px}
+  .badge[data-state="ok"] .dot{background:#4ade80}
+  .view{position:absolute;inset:0;display:none;background:#000}
+  .view.show{display:flex;align-items:center;justify-content:center}
+  .view img{max-width:100%;max-height:100%;object-fit:contain}
+  .view iframe{width:100%;height:100%;border:0;background:#fff}
+  .player.vw video,.player.vw .bar,.player.vw .meter{visibility:hidden}
+  .player.vw .bigplay,.player.vw .stats{display:none!important}
+  pre#log{margin:0;max-height:190px;overflow:auto;font:.78rem/1.55 ui-monospace,Menlo,Consolas,monospace;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}
   .hint{margin:10px 0 0;font-size:.82rem;color:var(--muted);line-height:1.5}
   .btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:12px 20px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:filter .2s}
   .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
@@ -130,16 +141,30 @@
 <main>
   <header>
     <div class="brand">
-      <h1>Gente OPA</h1>
-      <p>Transmisión en vivo</p>
+      <h1>Probador de URLs</h1>
+      <p>HLS, DASH, MP4, audio, imágenes, YouTube, páginas web y más</p>
     </div>
     <span class="badge" id="badge" data-state="wait"><span class="dot"></span><span id="badgeText">Iniciando…</span></span>
   </header>
 
+  <div class="row urlbar">
+    <input type="text" inputmode="url" id="srcInput" aria-label="URL a probar" placeholder="Pega cualquier URL: .m3u8, .mpd, .mp4, .mp3, imagen, YouTube, página web…" spellcheck="false" autocomplete="off">
+    <select id="kindSel" aria-label="Tipo de contenido">
+      <option value="auto">Auto</option><option value="hls">HLS</option><option value="dash">DASH</option>
+      <option value="media">Video / audio</option><option value="mpegts">MPEG-TS / FLV</option>
+      <option value="image">Imagen</option><option value="embed">Página / embed</option>
+    </select>
+    <button class="btn" id="loadBtn">Probar</button>
+    <button class="btn ghost" id="openBtn" title="Abrir la URL fuera del reproductor">Abrir ↗</button>
+    <button class="btn ghost" id="resetBtn" title="Volver a la URL de ejemplo">Restaurar</button>
+  </div>
+  <p class="hint" style="margin:0 2px 18px">Detecta el tipo solo y prueba alternativas si falla. Los esquemas que el navegador no reproduce (rtmp://, vlc://, etc.) se pasan a la app del sistema con «Abrir».</p>
+
   <div class="stage">
     <canvas class="ambient" id="ambient" width="48" height="27" aria-hidden="true"></canvas>
     <section class="player" id="player" tabindex="0" aria-label="Reproductor de video">
-      <video id="video" playsinline webkit-playsinline preload="auto" aria-label="Transmisión en vivo"></video>
+      <video id="video" playsinline webkit-playsinline preload="auto" aria-label="Reproductor"></video>
+      <div class="view" id="view"></div>
 
       <div class="stats" id="stats" aria-live="off"></div>
       <div class="toast" id="toast" role="status"></div>
@@ -180,16 +205,11 @@
   </dl>
 
   <details class="more">
-    <summary>Fuente y atajos</summary>
+    <summary>Registro y atajos</summary>
     <div class="more-body">
       <div>
-        <h2>Dirección de la transmisión</h2>
-        <div class="row">
-          <input type="url" id="srcInput" aria-label="URL de la transmisión (.m3u8)" placeholder="https://…/playlist.m3u8" spellcheck="false" autocomplete="off">
-          <button class="btn" id="loadBtn">Cargar</button>
-          <button class="btn ghost" id="resetBtn" title="Volver a la URL original">Restaurar</button>
-        </div>
-        <p class="hint">Pega un enlace .m3u8. Se guarda en este navegador.</p>
+        <h2>Registro de pruebas</h2>
+        <pre id="log">Aún sin pruebas.</pre>
       </div>
       <div>
         <h2>Atajos de teclado</h2>
@@ -222,7 +242,7 @@
     msg: $("overlayMsg"), sub: $("overlaySub"), retry: $("retryBtn"), bigplay: $("bigplay"),
     play: $("playBtn"), live: $("liveBtn"), mute: $("muteBtn"), vol: $("vol"), fs: $("fsBtn"),
     pip: $("pipBtn"), liveLbl: $("liveLbl"), meter: $("meterFill"), amb: $("ambient"), statsBtn: $("statsBtn"), stats: $("stats"), toast: $("toast"),
-    src: $("srcInput"), load: $("loadBtn"), reset: $("resetBtn"), level: $("levelSel"),
+    src: $("srcInput"), load: $("loadBtn"), reset: $("resetBtn"), level: $("levelSel"), kind: $("kindSel"), open: $("openBtn"), view: $("view"), log: $("log"),
     mEngine: $("mEngine"), mRes: $("mRes"), mBr: $("mBr"), mBuf: $("mBuf"), mRec: $("mRec")
   };
 
@@ -239,7 +259,7 @@
   let hls = null, engine = "—", currentSrc = DEFAULT_SRC;
   let retryTimer = null, retryCount = 0, totalReconnects = 0, userPaused = false;
   let netErrCount = 0, mediaErrCount = 0, lastMediaRecover = 0, idleTimer = null, statsOn = false, toastTimer = null;
-  let stalledTimer = null;
+  let stalledTimer = null, dash = null, mpg = null, pending = null, attempt = 0, isLive = false;
 
   /* ---------- Utilidades de interfaz ---------- */
   const setBadge = (state, text) => { el.badge.dataset.state = state; el.badgeText.textContent = text; };
@@ -270,55 +290,189 @@
     const s = video.seekable;
     return s.length ? s.end(s.length - 1) : NaN;
   };
-  const latency = () => { const e = liveEdge(); return isNaN(e) ? NaN : Math.max(0, e - video.currentTime); };
+  const latency = () => { if (!isLive) return NaN; const e = liveEdge(); return isNaN(e) ? NaN : Math.max(0, e - video.currentTime); };
 
-  /* ---------- Carga del flujo ---------- */
+  /* ---------- Detección y carga universal ---------- */
+  const LABEL = { hls: "HLS", dash: "DASH", media: "video/audio directo", mpegts: "MPEG-TS / FLV", image: "imagen", embed: "página / embed" };
+  const CHAIN = ["hls", "media", "dash", "mpegts", "image", "embed"];
+  const HLS_CFG = {
+    lowLatencyMode: false, enableWorker: true, testBandwidth: false, backBufferLength: 30,
+    maxBufferLength: 60, maxMaxBufferLength: 120, maxBufferSize: 60e6, maxBufferHole: 1.5,
+    liveSyncDuration: 30, liveMaxLatencyDuration: 90,
+    manifestLoadingMaxRetry: 2, manifestLoadingRetryDelay: 1000, manifestLoadingMaxRetryTimeout: 10000,
+    levelLoadingMaxRetry: 2, levelLoadingMaxRetryTimeout: 10000,
+    fragLoadingMaxRetry: 8, fragLoadingRetryDelay: 1000, fragLoadingMaxRetryTimeout: 15000
+  };
+  const note = t => { el.log.textContent += t + "\n"; el.log.scrollTop = 1e9; };
+  const fail = (msg, sub) => {
+    setBadge("error", "Error"); showOverlay(msg, sub, { spin: false, retry: true });
+    el.retry.onclick = () => start(currentSrc); document.querySelector(".more").open = true;
+  };
+  const normalize = v => {
+    v = v.trim();
+    if (/^\/\//.test(v)) return "https:" + v;
+    return (!/^[a-z][a-z0-9+.-]*:/i.test(v) || /^[\w.-]+:\d+(\/|$)/.test(v)) ? "https://" + v : v;
+  };
+  const toEmbed = u => {
+    let m;
+    if ((m = u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|live\/|embed\/)|youtu\.be\/)([\w-]{11})/i))) return "https://www.youtube.com/embed/" + m[1] + "?autoplay=1";
+    if ((m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/i))) return "https://player.vimeo.com/video/" + m[1] + "?autoplay=1";
+    return u;
+  };
+  const guess = s => {
+    if (toEmbed(s) !== s) return "embed";
+    if (/\.m3u8?(?![a-z0-9])/i.test(s)) return "hls";
+    if (/\.mpd(?![a-z0-9])/i.test(s)) return "dash";
+    if (/\.(flv|m2ts|ts)(?![a-z0-9])/i.test(s)) return "mpegts";
+    if (/\.(mp4|m4v|webm|ogv|ogg|oga|opus|mov|mp3|m4a|aac|wav|flac|weba|3gp|mkv)(?![a-z0-9])/i.test(s)) return "media";
+    if (/\.(jpe?g|png|gif|webp|avif|svg|bmp|ico)(?![a-z0-9])/i.test(s)) return "image";
+    if (/\.(html?|php|aspx?)(?![a-z0-9])/i.test(s)) return "embed";
+    return null;
+  };
+  async function sniff(src) {   // lee solo el primer fragmento; requiere CORS
+    const c = new AbortController(), t = setTimeout(() => c.abort(), 5000);
+    try {
+      const r = await fetch(src, { signal: c.signal });
+      const ct = (r.headers.get("content-type") || "").toLowerCase();
+      const rd = r.body.getReader(), { value } = await rd.read(); rd.cancel();
+      const txt = new TextDecoder().decode((value || new Uint8Array()).slice(0, 600)).trimStart();
+      let k = null;
+      if (/^#EXTM3U/i.test(txt) || /mpegurl/.test(ct)) k = "hls";
+      else if (/<MPD/i.test(txt) || /dash\+xml/.test(ct)) k = "dash";
+      else if (/mp2t|flv/.test(ct)) k = "mpegts";
+      else if (/^(video|audio)\//.test(ct) || /ogg/.test(ct)) k = "media";
+      else if (/^image\//.test(ct)) k = "image";
+      else if (/html/.test(ct) || /^<(!doctype html|html)/i.test(txt)) k = "embed";
+      note("HTTP " + r.status + " · " + (ct || "sin content-type") + (k ? " → " + LABEL[k] : ""));
+      return k;
+    } catch { note("No se pudo inspeccionar (CORS o red): se detecta por extensión y se prueba en cadena."); return null; }
+    finally { clearTimeout(t); }
+  }
+  const lib = (check, urls) => new Promise((res, rej) => {
+    if (check()) return res();
+    const next = i => {
+      if (i >= urls.length) return rej(new Error("no se pudo cargar la librería (¿CDN bloqueada?)"));
+      const s = document.createElement("script"); s.src = urls[i];
+      s.onload = () => check() ? res() : next(i + 1); s.onerror = () => next(i + 1);
+      document.head.appendChild(s);
+    };
+    next(0);
+  });
+  // Espera a que el video tenga datos; falla por error o tiempo agotado.
+  const arm = ms => new Promise((res, rej) => {
+    const ok = () => done();
+    const t = setTimeout(() => done(new Error("tiempo agotado (" + ms / 1000 + " s)")), ms);
+    const done = e => { clearTimeout(t); video.removeEventListener("loadeddata", ok); pending = null; e ? rej(e) : res(); };
+    video.addEventListener("loadeddata", ok, { once: true });
+    pending = done;
+  });
+  const setEngine = e => { engine = e; el.mEngine.textContent = e; };
+  const show = (node, e) => {
+    el.view.replaceChildren(node); el.view.classList.add("show"); player.classList.add("vw");
+    hideOverlay(); el.bigplay.classList.remove("show"); setBadge("ok", "Cargado"); setEngine(e);
+  };
+
+  const RUN = {
+    hls(src, ms) {
+      const ok = window.Hls && Hls.isSupported(), nat = !ok && video.canPlayType("application/vnd.apple.mpegurl");
+      if (!ok && !nat) return Promise.reject(new Error("HLS no soportado en este navegador"));
+      const p = arm(ms);
+      if (nat) { setEngine("Nativo (HLS)"); video.src = src; video.load(); tryPlay(); }
+      else { setEngine("hls.js " + Hls.version); hls = new Hls(HLS_CFG); bindHls(hls); hls.loadSource(src); hls.attachMedia(video); }
+      return p;
+    },
+    media(src, ms) { const p = arm(ms); setEngine("Nativo (HTML5)"); video.src = src; video.load(); tryPlay(); return p; },
+    async dash(src, ms) {
+      await lib(() => window.dashjs, ["https://cdnjs.cloudflare.com/ajax/libs/dashjs/4.7.4/dash.all.min.js", "https://cdn.jsdelivr.net/npm/dashjs@4.7.4/dist/dash.all.min.js"]);
+      const p = arm(ms);
+      dash = dashjs.MediaPlayer().create();
+      dash.on("error", e => pending ? pending(new Error(String((e.error && (e.error.message || e.error)) || "error DASH"))) : toast("Error DASH"));
+      dash.on("streamInitialized", () => {
+        isLive = dash.isDynamic();
+        dash.getBitrateInfoListFor("video").forEach(b => {
+          const o = document.createElement("option"); o.value = b.qualityIndex;
+          o.textContent = b.height ? b.height + "p" : fmtBr(b.bitrate); el.level.appendChild(o);
+        });
+      });
+      dash.initialize(video, src, true); setEngine("dash.js " + dash.getVersion());
+      return p;
+    },
+    async mpegts(src, ms) {
+      await lib(() => window.mpegts, ["https://cdnjs.cloudflare.com/ajax/libs/mpegts.js/1.7.3/mpegts.js", "https://cdn.jsdelivr.net/npm/mpegts.js@1.7.3/dist/mpegts.js"]);
+      if (!mpegts.isSupported()) throw new Error("MSE no disponible");
+      const p = arm(ms);
+      mpg = mpegts.createPlayer({ type: /\.flv(?![a-z0-9])/i.test(src) ? "flv" : "mpegts", isLive: true, url: src });
+      mpg.on(mpegts.Events.ERROR, (t, d) => { if (pending) pending(new Error(t + (d ? " · " + d : ""))); });
+      mpg.attachMediaElement(video); mpg.load(); tryPlay(); setEngine("mpegts.js");
+      return p;
+    },
+    image(src, ms) {
+      return new Promise((res, rej) => {
+        const i = new Image(), t = setTimeout(() => { i.onload = null; rej(new Error("tiempo agotado")); }, ms);
+        i.onload = () => { clearTimeout(t); show(i, "Imagen"); res(); };
+        i.onerror = () => { clearTimeout(t); rej(new Error("no es una imagen o fue bloqueada")); };
+        i.src = src;
+      });
+    },
+    embed(src) {
+      const f = document.createElement("iframe");
+      f.allow = "autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write"; f.allowFullscreen = true;
+      f.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-forms allow-presentation");
+      show(f, "iframe"); f.src = toEmbed(src);
+      note("ℹ Si queda en blanco, el sitio no permite incrustarse: usa «Abrir ↗».");
+      return Promise.resolve();
+    }
+  };
+
   function destroy() {
     clearTimeout(retryTimer); clearTimeout(stalledTimer);
+    if (pending) pending(new Error("cancelado"));
     if (hls) { hls.destroy(); hls = null; }
+    if (dash) { dash.reset(); dash = null; }
+    if (mpg) { try { mpg.destroy(); } catch {} mpg = null; }
+    el.view.replaceChildren(); el.view.classList.remove("show"); player.classList.remove("vw");
     video.removeAttribute("src"); video.load();
   }
 
-  function start(src) {
+  async function start(raw, forced) {
+    forced = forced || el.kind.value;
     destroy();
-    currentSrc = src;
-    retryCount = 0; netErrCount = 0; mediaErrCount = 0;
+    const id = ++attempt;
+    retryCount = 0; netErrCount = 0; mediaErrCount = 0; isLive = false;
+    el.log.textContent = ""; el.mRes.textContent = "—"; el.mBr.textContent = "—"; el.mEngine.textContent = "—";
     el.level.innerHTML = '<option value="-1">Auto</option>';
-    setBadge("wait", "Conectando…");
-    showOverlay("Conectando con la transmisión…", "");
-
-    if (window.Hls && Hls.isSupported()) {
-      engine = "hls.js " + Hls.version;
-      hls = new Hls({
-        lowLatencyMode: false,          // incompatible con un búfer grande
-        enableWorker: true,
-        startLevel: 0,                  // empezar en la calidad más baja
-        testBandwidth: false,
-        backBufferLength: 30,
-        maxBufferLength: 60,            // segundos de búfer objetivo
-        maxMaxBufferLength: 120,
-        maxBufferSize: 60 * 1000 * 1000,
-        maxBufferHole: 1.5,             // tolera pequeños huecos
-        liveSyncDuration: 30,           // reproducir ~30 s detrás del directo
-        liveMaxLatencyDuration: 90,
-        manifestLoadingMaxRetry: 6, manifestLoadingRetryDelay: 1000, manifestLoadingMaxRetryTimeout: 10000,
-        levelLoadingMaxRetry: 6, levelLoadingMaxRetryTimeout: 10000,
-        fragLoadingMaxRetry: 8, fragLoadingRetryDelay: 1000, fragLoadingMaxRetryTimeout: 15000
-      });
-      bindHls(hls);
-      hls.loadSource(src);
-      hls.attachMedia(video);
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      engine = "Nativo (HLS)";
-      video.src = src;
-      video.load();
-      tryPlay();
-    } else {
-      engine = "No compatible";
-      setBadge("error", "Sin soporte");
-      showOverlay("Este navegador no puede reproducir HLS.", "Prueba con Chrome, Edge, Firefox o Safari actualizados.", { spin: false });
+    setBadge("wait", "Conectando…"); showOverlay("Conectando…", "");
+    const src = normalize(raw); currentSrc = src;
+    let proto;
+    try { proto = new URL(src).protocol.slice(0, -1).toLowerCase(); }
+    catch { return fail("La URL no es válida", "Revisa el formato, por ejemplo https://servidor/ruta/archivo."); }
+    note("URL: " + src);
+    if (!/^(https?|blob|data|file|wss?)$/.test(proto)) {
+      note("Protocolo «" + proto + "»: el navegador no lo reproduce directamente.");
+      return fail("Protocolo " + proto + "://", "Pulsa «Abrir ↗» para pasarlo a la app del sistema (VLC, etc.).");
     }
-    el.mEngine.textContent = engine;
+    if (location.protocol === "https:" && proto === "http") note("⚠ Contenido mixto: el navegador puede bloquear http:// desde una página https://.");
+    let order = forced !== "auto" ? [forced] : null;
+    if (!order) {
+      let first = /^wss?$/.test(proto) ? "mpegts" : null;
+      if (!first && /^https?$/.test(proto)) first = await sniff(src);
+      if (id !== attempt) return;
+      first = first || guess(src) || CHAIN[0];
+      order = [first, ...CHAIN.filter(k => k !== first)];
+    }
+    for (let i = 0; i < order.length; i++) {
+      const k = order[i];
+      note("▸ Probando como " + LABEL[k] + "…");
+      try {
+        await RUN[k](src, i === 0 ? 20000 : 8000);
+        if (id !== attempt) return;
+        note("✓ Funciona como " + LABEL[k]); return;
+      } catch (e) {
+        if (id !== attempt) return;
+        note("✗ " + LABEL[k] + ": " + e.message); destroy();
+      }
+    }
+    fail("No se pudo reproducir esta URL", "Posibles causas: CORS del servidor, contenido mixto, DRM o formato no soportado. Prueba «Abrir ↗».");
   }
 
   function bindHls(h) {
@@ -328,11 +482,10 @@
         o.value = i; o.textContent = l.height ? l.height + "p" : "Nivel " + i;
         el.level.appendChild(o);
       });
-      h.currentLevel = 0;               // fija la calidad más baja (desactiva ABR)
-      el.level.value = "0";
       netErrCount = 0;
       tryPlay();
     });
+    h.on(Hls.Events.LEVEL_LOADED, (_, d) => { isLive = !!d.details.live; });
     h.on(Hls.Events.LEVEL_SWITCHED, (_, d) => {
       const l = h.levels[d.level];
       if (l) { el.mRes.textContent = l.width ? l.width + "×" + l.height : (l.height ? l.height + "p" : "—"); el.mBr.textContent = fmtBr(l.bitrate); }
@@ -346,6 +499,7 @@
       if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) setBadge("wait", "Cargando búfer…");
       return;
     }
+    if (pending) return pending(new Error(data.details + (data.response && data.response.code ? " (HTTP " + data.response.code + ")" : "")));
     switch (data.type) {
       case Hls.ErrorTypes.NETWORK_ERROR:
         netErrCount++;
@@ -400,7 +554,7 @@
   /* ---------- Eventos del video ---------- */
   video.addEventListener("playing", () => {
     hideOverlay(); el.bigplay.classList.remove("show");
-    setBadge("live", "En vivo"); clearTimeout(stalledTimer); retryCount = 0;
+    isLive ? setBadge("live", "En vivo") : setBadge("ok", "Reproduciendo"); clearTimeout(stalledTimer); retryCount = 0;
     if (video.muted) toast("Sonido desactivado: pulsa el altavoz para activarlo");
     syncPlay();
   });
@@ -409,17 +563,26 @@
     showOverlay("Cargando…", "");
     clearTimeout(stalledTimer);
     stalledTimer = setTimeout(() => {   // si se queda colgado más de 30 s, reconectar
-      if (video.readyState < 3 && !userPaused) scheduleReconnect("La transmisión no responde.", () => { hls ? (hls.stopLoad(), hls.startLoad()) : start(currentSrc); });
+      if (isLive && video.readyState < 3 && !userPaused) scheduleReconnect("La transmisión no responde.", () => { hls ? (hls.stopLoad(), hls.startLoad()) : start(currentSrc); });
     }, 30000);
   });
   video.addEventListener("canplay", () => { if (!video.paused) hideOverlay(); });
   video.addEventListener("pause", () => { syncPlay(); if (!video.ended) setBadge("wait", "En pausa"); });
   video.addEventListener("play", syncPlay);
   video.addEventListener("volumechange", syncVolume);
+  const MEDIA_ERR = { 1: "carga abortada", 2: "error de red o CORS", 3: "error de decodificación", 4: "formato u origen no soportado" };
   video.addEventListener("error", () => {
-    if (!hls) scheduleReconnect("No se pudo reproducir el video.", () => start(currentSrc), true);
+    const m = MEDIA_ERR[video.error ? video.error.code : 0] || "error de reproducción";
+    if (pending) return pending(new Error(m));
+    if (hls || dash || mpg) return;   // los motores gestionan sus propios errores
+    if (isLive) scheduleReconnect("No se pudo reproducir el video.", () => start(currentSrc), true);
+    else { setBadge("error", "Error"); showOverlay("No se pudo reproducir", m, { spin: false, retry: true }); }
   });
-  video.addEventListener("ended", () => scheduleReconnect("La transmisión finalizó o se interrumpió.", () => start(currentSrc), true));
+  video.addEventListener("ended", () => {
+    if (isLive) scheduleReconnect("La transmisión finalizó o se interrumpió.", () => start(currentSrc), true);
+    else { setBadge("wait", "Finalizado"); toast("Reproducción terminada"); }
+  });
+  video.addEventListener("durationchange", () => { if (!hls && !dash) isLive = video.duration === Infinity; });
 
   function syncPlay() {
     el.play.innerHTML = video.paused ? ICON.play : ICON.pause;
@@ -474,16 +637,24 @@
   ["fullscreenchange", "webkitfullscreenchange"].forEach(ev => document.addEventListener(ev, () => {
     el.fs.innerHTML = (document.fullscreenElement || document.webkitFullscreenElement) ? ICON.fsExit : ICON.fs;
   }));
-  el.level.onchange = () => { if (hls) { hls.currentLevel = +el.level.value; toast(el.level.selectedOptions[0].textContent); } };
+  el.level.onchange = () => {
+    const v = +el.level.value;
+    if (hls) hls.currentLevel = v;
+    else if (dash) { dash.updateSettings({ streaming: { abr: { autoSwitchBitrate: { video: v < 0 } } } }); if (v >= 0) dash.setQualityFor("video", v, true); }
+    else return;
+    toast(el.level.selectedOptions[0].textContent);
+  };
 
-  /* Fuente personalizada */
-  el.src.value = safeStore.get(STORE_KEY) || DEFAULT_SRC;
+  /* Fuente personalizada (también acepta ?url=...) */
+  el.src.value = new URLSearchParams(location.search).get("url") || safeStore.get(STORE_KEY) || DEFAULT_SRC;
   const loadFromInput = () => {
     const v = el.src.value.trim();
-    try { new URL(v); } catch { toast("La URL no es válida"); el.src.focus(); return; }
+    if (!v) { toast("Escribe una URL"); el.src.focus(); return; }
     safeStore.set(STORE_KEY, v); userPaused = false; start(v);
   };
-  el.load.onclick = loadFromInput;
+  el.load.onclick = loadFromInput; el.kind.onchange = loadFromInput;
+  el.open.onclick = () => { const u = normalize(el.src.value); if (/^https?:/i.test(u)) window.open(u, "_blank", "noopener"); else location.href = u; };
+  el.retry.onclick = () => start(currentSrc);
   el.src.addEventListener("keydown", e => { if (e.key === "Enter") loadFromInput(); e.stopPropagation(); });
   el.reset.onclick = () => { safeStore.del(STORE_KEY); el.src.value = DEFAULT_SRC; userPaused = false; start(DEFAULT_SRC); };
 
@@ -513,7 +684,7 @@
 
   /* Media Session (controles del sistema / pantalla de bloqueo) */
   if ("mediaSession" in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({ title: "Gente OPA", artist: "Transmisión en vivo" });
+    navigator.mediaSession.metadata = new MediaMetadata({ title: "Probador de URLs", artist: "Reproductor universal" });
     navigator.mediaSession.setActionHandler("play", togglePlay);
     navigator.mediaSession.setActionHandler("pause", togglePlay);
   }
@@ -525,11 +696,12 @@
     const atLive = !video.paused && !isNaN(lat) && lat < 45;
     el.live.classList.toggle("at-live", atLive);
     el.liveLbl.textContent = atLive ? "En vivo" : "Ir al directo";
+    el.live.style.display = isLive ? "" : "none";
     el.meter.style.transform = "scaleX(" + Math.min(1, buf / 60).toFixed(3) + ")";
     if (hls && hls.currentLevel >= 0) {
       const l = hls.levels[hls.currentLevel];
       if (l && el.mRes.textContent === "—") el.mRes.textContent = l.height ? l.height + "p" : "—";
-    } else if (!hls && video.videoWidth) el.mRes.textContent = video.videoWidth + "×" + video.videoHeight;
+    } else if (!hls && video.readyState > 1 && !el.view.classList.contains("show")) el.mRes.textContent = video.videoWidth ? video.videoWidth + "×" + video.videoHeight : "Solo audio";
     if (statsOn) {
       const q = video.getVideoPlaybackQuality ? video.getVideoPlaybackQuality() : {};
       const bw = hls && hls.bandwidthEstimate ? fmtBr(hls.bandwidthEstimate) : "—";

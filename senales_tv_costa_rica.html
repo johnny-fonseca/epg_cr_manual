@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Señales de TV en vivo — Costa Rica</title>
+<meta name="description" content="Directorio de enlaces oficiales y señales directas de televisión en vivo de Costa Rica.">
+<style>
+:root{--bg:#0b1220;--panel:#121c2e;--panel2:#18263d;--text:#f5f7fb;--muted:#a9b8ce;--accent:#55d6be;--accent2:#7aa7ff;--line:#2b3b55;--warn:#ffd166}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(135deg,#09101c,#101b2d 55%,#0c1726);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1180px;margin:auto;padding:28px 18px 56px}.hero{padding:34px 0 22px}.eyebrow{color:var(--accent);font-size:.8rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.hero h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:10px 0 14px;max-width:850px}.hero p{color:var(--muted);max-width:800px;font-size:1.04rem}.toolbar{position:sticky;top:10px;z-index:3;display:flex;gap:10px;flex-wrap:wrap;background:rgba(18,28,46,.94);border:1px solid var(--line);padding:12px;border-radius:16px;backdrop-filter:blur(12px);box-shadow:0 12px 30px #0004}.toolbar input{flex:1 1 300px;min-width:200px;background:#0b1423;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:1rem;outline:none}.toolbar input:focus{border-color:var(--accent)}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{border:1px solid var(--line);background:#0b1423;color:var(--muted);border-radius:999px;padding:9px 13px;cursor:pointer}.filters button.active,.filters button:hover{background:var(--accent);color:#07131d;border-color:var(--accent);font-weight:700}.meta{color:var(--muted);font-size:.9rem;margin:18px 0 10px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;min-height:196px;transition:transform .18s,border-color .18s}.card:hover{transform:translateY(-2px);border-color:#53769e}.card h3{font-size:1.08rem;margin:8px 0 5px}.card p{color:var(--muted);font-size:.9rem;margin:0 0 14px;flex:1}.top{display:flex;align-items:center;justify-content:space-between;gap:8px}.tag{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:#203953;color:#b8d1ff}.tag.official{background:#143f3a;color:#8bf0dd}.tag.direct{background:#453819;color:var(--warn)}.location{color:var(--muted);font-size:.8rem}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:9px 12px;font-weight:750;font-size:.88rem;background:var(--accent);color:#07131d}.actions a.secondary{background:#213452;color:#d8e6ff}.note{margin:28px 0;padding:16px 18px;border-left:4px solid var(--warn);background:#2b2516;color:#eadfbf;border-radius:10px}.section{margin-top:34px}.section h2{font-size:1.55rem;margin:0 0 5px}.section>p{color:var(--muted);margin-top:0}.empty{display:none;color:var(--muted);padding:25px 0}.footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}.footer a{color:#a8c4ff}.count{color:var(--accent);font-weight:800}@media(max-width:560px){.wrap{padding:18px 12px 38px}.hero{padding-top:20px}.card{min-height:180px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+  <div class="eyebrow">Directorio actualizado · 10 noviembre 2026</div>
+  <h1>Señales de TV en vivo de Costa Rica</h1>
+  <p>Accesos rápidos a canales nacionales, regionales y temáticos. Los enlaces verdes llevan al sitio oficial del medio; los enlaces dorados son transmisiones HLS encontradas en la playlist local <code>tv_cr.m3u</code>.</p>
+</header>
+
+<div class="toolbar" aria-label="Buscar y filtrar canales">
+  <input id="search" type="search" placeholder="Buscar por canal, ciudad o categoría…" autocomplete="off">
+  <div class="filters">
+    <button class="active" data-filter="all">Todos</button>
+    <button data-filter="official">Sitios oficiales</button>
+    <button data-filter="direct">Señales directas</button>
+    <button data-filter="news">Noticias</button>
+    <button data-filter="regional">Regionales</button>
+    <button data-filter="faith">Fe</button>
+  </div>
+</div>
+
+<section class="section">
+  <h2>Sitios oficiales</h2>
+  <p>Enlaces directos a la página de transmisión de cada medio. La disponibilidad puede variar por horario, derechos de emisión y ubicación.</p>
+  <div class="grid" id="official-grid"></div>
+</section>
+
+<section class="section">
+  <h2>Señales directas de la playlist local</h2>
+  <p>Enlaces de reproducción HLS. Pueden requerir un reproductor compatible, cambiar sin aviso, no estar activas las 24 horas o tener geobloqueo.</p>
+  <div class="grid" id="direct-grid"></div>
+  <div class="empty" id="empty">No se encontraron canales con ese criterio.</div>
+</section>
+
+<div class="note"><strong>Importante:</strong> este archivo funciona como índice de enlaces y no aloja ni retransmite contenido. Los nombres y URLs pertenecen a sus respectivos operadores. Si un enlace falla, abre la página principal del medio o revisa la programación oficial.</div>
+
+<footer class="footer">
+  <strong>Fuentes consultadas:</strong> <a href="https://www.teletica.com/vivo" target="_blank" rel="noopener">Teletica</a> · <a href="https://www.repretel.com/envivo-canal6/" target="_blank" rel="noopener">Repretel</a> · <a href="https://sinartdigital.com/envivo-canaltrece" target="_blank" rel="noopener">SINART</a> · <a href="https://www.telediario.cr/television" target="_blank" rel="noopener">Telediario</a> · <a href="https://ticoelectronica.com/television-en-vivo-costa-rica/" target="_blank" rel="noopener">Directorio de referencia</a>.<br>
+  Verificación documental realizada el 10 de noviembre de 2026. No se certifica emisión continua ni recepción en todas las zonas del país.
+</footer>
+</main>
+<script>
+const official = [
+ {n:'Teletica · Canal 7',c:'General · Noticias',l:'Nacional',u:'https://www.teletica.com/vivo',d:'Señales en vivo y programación oficial de Teletica.',k:'news'},
+ {n:'Repretel · Canal 6',c:'General · Noticias',l:'Nacional',u:'https://www.repretel.com/envivo-canal6/',d:'Señal oficial de Canal 6.',k:'news'},
+ {n:'Repretel · Canal 11',c:'General · Noticias',l:'Nacional',u:'https://www.repretel.com/envivo-canal-11/',d:'Señal oficial de Canal 11.',k:'news'},
+ {n:'Repretel · Canal 4',c:'Entretenimiento',l:'Nacional',u:'https://www.repretel.com/envivo-canal4/',d:'Página oficial de señal y programación.',k:'all'},
+ {n:'Repretel · Canal 2',c:'General',l:'Nacional',u:'https://www.repretel.com/envivo-canal2/',d:'Página oficial de señal y programación.',k:'all'},
+ {n:'SINART · Canal Trece',c:'Cultura · Información',l:'Nacional',u:'https://sinartdigital.com/envivo-canaltrece',d:'Señal pública oficial de Costa Rica.',k:'news'},
+ {n:'Telediario · Canal 8',c:'Noticias · General',l:'Nacional',u:'https://www.telediario.cr/television/en-vivo',d:'TV en directo de Multimedios Costa Rica.',k:'news'},
+ {n:'¡OPA! · Canal 38',c:'Noticias · Entretenimiento',l:'San José',u:'https://genteopa.com/envivo/',d:'Transmisión oficial en tiempo real.',k:'news'},
+ {n:'Extra TV · Canal 42',c:'Noticias',l:'Nacional',u:'https://www.diarioextra.com/extra-tv/',d:'Señal online de Diario Extra.',k:'news'},
+ {n:'Trivisión · Canal 36',c:'Noticias · Cultura',l:'Guanacaste',u:'https://trivisioncr.com/tv-en-vivo/',d:'Canal provincial con programación guanacasteca.',k:'regional'},
+ {n:'TVN · Canal 14',c:'Noticias · General',l:'Zona Norte',u:'https://www.tvn14.com/tv-en-vivo/',d:'Televisión regional desde San Carlos.',k:'regional'},
+ {n:'TV Sur',c:'Noticias · Regional',l:'Pérez Zeledón',u:'https://www.tvsur.co.cr/envivo/',d:'Señal y contenidos de la zona sur.',k:'regional'},
+ {n:'Quince UCR',c:'Universitaria · Cultural',l:'Nacional',u:'https://quince.ucr.ac.cr/',d:'Sitio oficial de televisión universitaria UCR.',k:'all'},
+ {n:'Enlace',c:'Cristiana',l:'Internacional',u:'https://www.enlace.org/envivo/',d:'Señal cristiana en español.',k:'faith'},
+ {n:'Canal 1 Costa Rica',c:'General',l:'Nacional',u:'https://canal1cr.com/',d:'Sitio del canal y sus contenidos.',k:'all'},
+ {n:'Costa Rica Channel',c:'Cultura · Turismo',l:'Nacional',u:'https://costaricachannel.tv/',d:'Programación cultural y turística.',k:'regional'}
+];
+const direct = [
+ ['360 RFTV','General','https://acceso.mediosdecostarica.com:3638/live/360rftvcrlive.m3u8','Costa Rica'],
+ ['¡OPA! 1080p','Entretenimiento','https://5fc584f3f19c9.streamlock.net/genteopa/videogenteopa/playlist.m3u8','San José'],
+ ['¡OPA! 720p','Entretenimiento','https://5fc584f3f19c9.streamlock.net/genteopa/videogenteopa_720p/playlist.m3u8','San José'],
+ ['BestClasicosTV','Entretenimiento','https://acceso.mediosdecostarica.com:3873/hybrid/play.m3u8','Costa Rica'],
+ ['Canal 1','General','https://vid.canal1cr.com:3424/multi_live/play_720.m3u8','Costa Rica'],
+ ['Canal 10','General','https://acceso.mediosdecostarica.com:3606/hybrid/play.m3u8','Costa Rica'],
+ ['Cartago Medios TV','Regional','https://acceso.mediosdecostarica.com:3511/stream/play.m3u8','Cartago'],
+ ['Cristo Visión Canal 31','Fe','https://3a310f6ec721e6b362fcd22772b57f36a2fe6bb2.tabeelcr.com:8080/cristovision31/iptv.m3u8','Costa Rica'],
+ ['Colosal TV','Entretenimiento','https://5eac7b031d945.streamlock.net/COLOSAL/COLOSAL/playlist.m3u8','Costa Rica'],
+ ['Conexión Positiva TV','Fe','https://tvstream.conexionpositivaradio.com/memfs/69239c4d-4116-4f4f-b065-bf17e81b1411.m3u8','Costa Rica'],
+ ['Costa Rica Channel','Cultura · Turismo','https://video0.rogohosting.com:19360/8006/8006.m3u8','Costa Rica'],
+ ['Coto Brus TV','Regional','https://cloudvideo.servers10.com:8081/8030/index.m3u8','Coto Brus'],
+ ['Enlace','Fe','http://45.5.117.57:8999/play/a01c/index.m3u8','Internacional'],
+ ['Enlace Juvenil','Fe','https://livecdnusa.enlace.plus/ejtv/smil:ejtv-hd.smil/playlist.m3u8','Internacional'],
+ ['Extrema TV','Fe','https://627bb251f23c7.streamlock.net:444/ExtremaTV/ExtremaTV/playlist.m3u8','Costa Rica'],
+ ['GAMTV.cr','General','https://v2.azulstream.com:8081/gamtv/gamtv/index.m3u8','Gran Área Metropolitana'],
+ ['Garabito TV','Regional','https://59ef525c24caa.streamlock.net/garabitoTV/garabitotv/playlist.m3u8','Garabito'],
+ ['Guatuso TV','Regional','https://5cf4a2c2512a2.streamlock.net/8176/8176/playlist.m3u8','Guatuso'],
+ ['Impact Channel','Fe','https://5fe2654d6127d.streamlock.net/impactchannel/videoimpactchannel/playlist.m3u8','Costa Rica'],
+ ['Limón TV','Regional','http://k4.usastreams.com/limontv1/limontv1/playlist.m3u8','Limón'],
+ ['Los Santos TV','Regional','https://tiquiciatv.com/hls/lstv.m3u8','Los Santos'],
+ ['Luz Naciente TV','Fe','https://streeming.protoscr.com:3858/live/streeminglive.m3u8','Costa Rica'],
+ ['Nicoya TV','Regional','https://59ef525c24caa.streamlock.net/nicoyatv/nicoyatv/playlist.m3u8','Nicoya'],
+ ['Norte Informativo TV','Noticias','https://videohd.live:19360/8076/8076.m3u8','Zona Norte'],
+ ['San José TV','Fe','https://rtmp.info/sanjosetv/envivo/playlist.m3u8','San José'],
+ ['San Vito Televisión','Regional','https://stream.lamegatv.com/hls/sanvitotelevision/index.m3u8','San Vito'],
+ ['Sarapiquí TV','Regional','http://tiquiciatv.com:1935/stv/web/playlist.m3u8','Sarapiquí'],
+ ['Super Cable','Entretenimiento','http://191.102.39.254:5000/live/5up3r5/playlist.m3u8','Costa Rica'],
+ ['TDtv','General','https://cloudvideo.servers10.com:8081/8230/index.m3u8','Costa Rica'],
+ ['Tele Uno','General','http://tv.teleunotv.cr:1935/TVUNO/TVUNO/playlist.m3u8','Costa Rica'],
+ ['TeleBrunca','Regional','https://59ef525c24caa.streamlock.net/telebrunca/telebrunca/playlist.m3u8','Zona Sur'],
+ ['TeleMas','Entretenimiento','https://acceso.mediosdecostarica.com:3192/hybrid/play.m3u8','Costa Rica'],
+ ['Telered Televisión','General','https://k20.usastreams.com:8081/telered/index.m3u8','Costa Rica'],
+ ['TeleSUR Costa Rica','Noticias','https://s1.tvdatta.com:3582/live/telesurlive.m3u8','Costa Rica'],
+ ['TicaVisión','General','https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8','Costa Rica'],
+ ['Tigo Sports Costa Rica','Deportes','https://live20.bozztv.com/akamaissh101/ssh101/livetigocr/playlist.m3u8','Costa Rica'],
+ ['TV Sur Canal 9','Regional','http://tv.ticosmedia.com:1935/TVSUR/TVSUR/playlist.m3u8','Pérez Zeledón'],
+ ['TV Sur Canal 14','Regional','https://k20.usastreams.com:8081/tvsur/index.m3u8','Pérez Zeledón'],
+ ['TVN 14','Regional','http://tvn.obix.tv:1935/TVN/CH14.stream_720p/playlist.m3u8','Zona Norte'],
+ ['XperTV','Entretenimiento','http://45.163.139.42:8000/play/a02x/index.m3u8','Costa Rica'],
+ ['Zurqui TV','Regional','https://videoserver.tmcreativos.com:19360/gesfnvpamn/gesfnvpamn.m3u8','Costa Rica']
+];
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function card(x,type){let n,c,u,l,d,k;if(type==='official'){({n,c,u,l,d,k}=x)}else{[n,c,u,l]=x;d='Enlace HLS directo tomado de tv_cr.m3u';k=c.toLowerCase().includes('fe')?'faith':c.toLowerCase().includes('not')?'news':c.toLowerCase().includes('reg')?'regional':'all'}return `<article class="card" data-type="${type}" data-kind="${k}" data-text="${esc((n+' '+c+' '+l).toLowerCase())}"><div class="top"><span class="tag ${type}">${type==='official'?'Sitio oficial':'Señal directa'}</span><span class="location">${esc(l)}</span></div><h3>${esc(n)}</h3><p>${esc(d)}<br><small>${esc(c)}</small></p><div class="actions"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">Abrir señal</a>${type==='direct'?`<a class="secondary" href="${esc(u)}" target="_blank" rel="noopener noreferrer">URL HLS</a>`:''}</div></article>`}
+const og=document.querySelector('#official-grid'),dg=document.querySelector('#direct-grid');og.innerHTML=official.map(x=>card(x,'official')).join('');dg.innerHTML=direct.map(x=>card(x,'direct')).join('');
+let filter='all';const search=document.querySelector('#search');document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render()}));search.addEventListener('input',render);
+function render(){const q=search.value.trim().toLowerCase();let visible=0;document.querySelectorAll('.card').forEach(c=>{const okFilter=filter==='all'||c.dataset.type===filter||c.dataset.kind===filter;const okQuery=!q||c.dataset.text.includes(q);const show=okFilter&&okQuery;c.style.display=show?'flex':'none';if(show)visible++});document.querySelector('#empty').style.display=visible?'none':'block'}
+</script>
+</body>
+</html>
