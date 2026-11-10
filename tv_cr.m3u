@@ -21,7 +21,7 @@ https://5fc584f3f19c9.streamlock.net/genteopa/videogenteopa_360p/playlist.m3u8
 #EXTINF:-1 tvg-id="OPA.cr@SD" tvg-logo="https://raw.githubusercontent.com/johnny-fonseca/epg_cr_manual/main/logos/OPA_cr_SD.png" group-title="Entertainment",¡OPA! (240p)
 https://5fc584f3f19c9.streamlock.net/genteopa/videogenteopa_240p/playlist.m3u8
 
-#EXTINF:-1 tvg-id="BestClasicosTV.cr@SD" group-title="General",BestClasicosTV (720p)
+#EXTINF:-1 tvg-id="BestClasicosTV.cr@SD" tvg-logo="https://raw.githubusercontent.com/johnny-fonseca/epg_cr_manual/main/logos/BestClasicosTV_cr.png" group-title="General",BestClasicosTV (720p)
 https://acceso.mediosdecostarica.com:3873/hybrid/play.m3u8
 
 #EXTINF:-1 tvg-id="Canal1.cr@SD" tvg-logo="https://raw.githubusercontent.com/johnny-fonseca/epg_cr_manual/main/logos/Canal1_cr_SD.png" group-title="General",Canal 1 (Costa Rica) (720p) [Not 24/7]
@@ -117,7 +117,7 @@ http://tv.teleunotv.cr:1935/TVUNO/TVUNO/playlist.m3u8
 #EXTINF:-1 tvg-id="TeleBrunca.cr@SD" tvg-logo="https://raw.githubusercontent.com/johnny-fonseca/epg_cr_manual/main/logos/TeleBrunca_cr_SD.png" group-title="General",TeleBrunca (720p) [Not 24/7]
 https://59ef525c24caa.streamlock.net/telebrunca/telebrunca/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Telefides.cr@SD" group-title="General",Telefides (720p)
+#EXTINF:-1 tvg-id="Telefides.cr@SD" tvg-logo="https://raw.githubusercontent.com/johnny-fonseca/epg_cr_manual/main/logos/Telefides_cr.png" group-title="General",Telefides (720p)
 https://5eac7b031d945.streamlock.net/TELEFIDES/TELEFIDES/playlist.m3u8
 
 #EXTINF:-1 tvg-id="TeleMas.cr@SD" tvg-logo="https://raw.githubusercontent.com/johnny-fonseca/epg_cr_manual/main/logos/TeleMas_cr_SD.png" group-title="Entertainment",TeleMas (720p) [Not 24/7]
