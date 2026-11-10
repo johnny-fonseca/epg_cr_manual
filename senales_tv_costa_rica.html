@@ -5,50 +5,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Señales de TV en vivo — Costa Rica</title>
 <meta name="description" content="Directorio de enlaces oficiales y señales directas de televisión en vivo de Costa Rica.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap">
 <style>
-:root{--bg:#0b1220;--panel:#121c2e;--panel2:#18263d;--text:#f5f7fb;--muted:#a9b8ce;--accent:#55d6be;--accent2:#7aa7ff;--line:#2b3b55;--warn:#ffd166}
-*{box-sizing:border-box} body{margin:0;background:linear-gradient(135deg,#09101c,#101b2d 55%,#0c1726);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5}
-.wrap{max-width:1180px;margin:auto;padding:28px 18px 56px}.hero{padding:34px 0 22px}.eyebrow{color:var(--accent);font-size:.8rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.hero h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:10px 0 14px;max-width:850px}.hero p{color:var(--muted);max-width:800px;font-size:1.04rem}.toolbar{position:sticky;top:10px;z-index:3;display:flex;gap:10px;flex-wrap:wrap;background:rgba(18,28,46,.94);border:1px solid var(--line);padding:12px;border-radius:16px;backdrop-filter:blur(12px);box-shadow:0 12px 30px #0004}.toolbar input{flex:1 1 300px;min-width:200px;background:#0b1423;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:1rem;outline:none}.toolbar input:focus{border-color:var(--accent)}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{border:1px solid var(--line);background:#0b1423;color:var(--muted);border-radius:999px;padding:9px 13px;cursor:pointer}.filters button.active,.filters button:hover{background:var(--accent);color:#07131d;border-color:var(--accent);font-weight:700}.meta{color:var(--muted);font-size:.9rem;margin:18px 0 10px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;min-height:196px;transition:transform .18s,border-color .18s}.card:hover{transform:translateY(-2px);border-color:#53769e}.card h3{font-size:1.08rem;margin:8px 0 5px}.card p{color:var(--muted);font-size:.9rem;margin:0 0 14px;flex:1}.top{display:flex;align-items:center;justify-content:space-between;gap:8px}.tag{font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:#203953;color:#b8d1ff}.tag.official{background:#143f3a;color:#8bf0dd}.tag.direct{background:#453819;color:var(--warn)}.location{color:var(--muted);font-size:.8rem}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:9px 12px;font-weight:750;font-size:.88rem;background:var(--accent);color:#07131d}.actions a.secondary{background:#213452;color:#d8e6ff}.note{margin:28px 0;padding:16px 18px;border-left:4px solid var(--warn);background:#2b2516;color:#eadfbf;border-radius:10px}.section{margin-top:34px}.section h2{font-size:1.55rem;margin:0 0 5px}.section>p{color:var(--muted);margin-top:0}.empty{display:none;color:var(--muted);padding:25px 0}.footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}.footer a{color:#a8c4ff}.count{color:var(--accent);font-weight:800}@media(max-width:560px){.wrap{padding:18px 12px 38px}.hero{padding-top:20px}.card{min-height:180px}}
+:root{color-scheme:light dark;--bg:#f2f4f8;--surface:#fff;--ink:#101a33;--muted:#566079;--line:#d9dfeb;--soft:#e8edf8;--blue:#1f4aa8;--on-blue:#fff;--red:#d62839;--warn:#7a4f00;--warn-bg:#fdf0d2;--focus:#1f4aa8}
+@media (prefers-color-scheme:dark){:root{--bg:#0c1220;--surface:#141d31;--ink:#eef2fb;--muted:#9aa7c2;--line:#27344f;--soft:#1b2842;--blue:#7b9cf2;--on-blue:#0c1220;--warn:#f2c35b;--warn-bg:#2c2410;--focus:#a9c0ff}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5;font-size:1rem}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.band{height:8px;background:linear-gradient(90deg,var(--blue) 0 16.6%,var(--surface) 16.6% 33.3%,var(--red) 33.3% 66.6%,var(--surface) 66.6% 83.3%,var(--blue) 83.3%)}
+.page{max-width:1120px;margin:0 auto;padding:0 1.1rem}
+header.head{padding:2.2rem 0 1.4rem}
+h1{font-size:clamp(2rem,5.2vw,3.4rem);line-height:1.04;letter-spacing:-.025em;font-weight:800;margin:0 0 .7rem;max-width:16ch}
+.lead{color:var(--muted);max-width:62ch;margin:0 0 1.1rem;font-size:1.05rem}
+.stats{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;margin:0;font-size:.95rem;color:var(--muted)}
+.stats b{color:var(--ink);font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums;margin-right:.3rem}
+
+.toolbar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:.8rem 0 .7rem}
+.search{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.field{flex:1 1 300px;position:relative}
+.field input{width:100%;min-height:46px;padding:0 .9rem;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit}
+.field input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 25%,transparent)}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.seg button{min-height:43px;padding:0 .95rem;border:0;background:none;color:var(--muted);font:600 .9rem inherit;cursor:pointer}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button[aria-pressed=true]{background:var(--blue);color:var(--on-blue)}
+.chips{display:flex;gap:.45rem;margin-top:.7rem;overflow-x:auto;padding-bottom:.25rem;scrollbar-width:thin}
+.chip{flex:none;min-height:36px;padding:0 .85rem;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:600 .85rem inherit;cursor:pointer}
+.chip small{color:var(--muted);font-weight:400;margin-left:.3rem;font-variant-numeric:tabular-nums}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip[aria-pressed=true] small{color:inherit;opacity:.75}
+.status{margin:1rem 0 0;color:var(--muted);font-size:.9rem}
+
+section.group{margin-top:2rem}
+.group h2{display:flex;align-items:baseline;gap:.6rem;font-size:1.4rem;letter-spacing:-.01em;margin:0 0 .25rem}
+.group h2 span{font-size:.9rem;font-weight:400;color:var(--muted);font-variant-numeric:tabular-nums}
+.group>p{margin:0 0 1rem;color:var(--muted);max-width:70ch;font-size:.95rem}
+details.help{margin:0 0 1rem;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.65rem .95rem;font-size:.92rem;max-width:70ch}
+details.help summary{cursor:pointer;font-weight:600}
+details.help p{margin:.6rem 0 0;color:var(--muted)}
+
+.list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,500px),1fr));gap:.6rem}
+.row{display:grid;grid-template-columns:3.2rem 1fr auto;gap:.5rem .9rem;align-items:center;padding:.75rem .9rem;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.row[hidden]{display:none}
+.dial{width:3.2rem;height:3.2rem;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:1.35rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em;background:var(--blue);color:var(--on-blue)}
+.dial.long{font-size:.95rem}
+.dial.ini{background:transparent;color:var(--muted);border:1.5px dashed var(--line);font-size:1rem}
+.info{min-width:0}
+.info h3{margin:0;font-size:1.02rem;line-height:1.25;font-weight:600}
+.meta{display:flex;flex-wrap:wrap;gap:.2rem .5rem;align-items:center;margin:.2rem 0 0;font-size:.84rem;color:var(--muted)}
+.pill{background:var(--soft);color:var(--ink);border-radius:999px;padding:0 .55rem;font-size:.78rem}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.desc{margin:.25rem 0 0;font-size:.84rem;color:var(--muted)}
+.acts{display:flex;gap:.45rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 .9rem;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:600 .875rem inherit;text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--blue)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.btn.primary:hover{filter:brightness(1.08)}
+.empty{margin:2rem 0;padding:1.4rem;border:1.5px dashed var(--line);border-radius:12px;text-align:center;color:var(--muted)}
+.empty[hidden]{display:none}
+.empty p{margin:0 0 .8rem}
+
+footer{margin:3rem 0 2.5rem;padding-top:1.3rem;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;max-width:80ch}
+footer p{margin:0 0 .7rem}
+footer a{color:var(--blue)}
+@media (max-width:540px){
+ .page{padding:0 .8rem}
+ .row{grid-template-columns:3.2rem 1fr}
+ .acts{grid-column:1/-1}
+ .acts .btn{flex:1}
+ .seg{width:100%}.seg button{flex:1}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
 <body>
-<main class="wrap">
-<header class="hero">
-  <div class="eyebrow">Directorio actualizado · 10 noviembre 2026</div>
+<div class="band" aria-hidden="true"></div>
+<main class="page">
+<header class="head">
   <h1>Señales de TV en vivo de Costa Rica</h1>
-  <p>Accesos rápidos a canales nacionales, regionales y temáticos. Los enlaces verdes llevan al sitio oficial del medio; los enlaces dorados son transmisiones HLS encontradas en la playlist local <code>tv_cr.m3u</code>.</p>
+  <p class="lead">Busca un canal y ábrelo desde el sitio oficial del medio, o copia su señal directa para verla en un reproductor. Verificado el 10 de noviembre de 2026.</p>
+  <p class="stats"><span><b id="n-official">0</b>sitios oficiales</span><span><b id="n-direct">0</b>señales directas</span></p>
 </header>
 
-<div class="toolbar" aria-label="Buscar y filtrar canales">
-  <input id="search" type="search" placeholder="Buscar por canal, ciudad o categoría…" autocomplete="off">
-  <div class="filters">
-    <button class="active" data-filter="all">Todos</button>
-    <button data-filter="official">Sitios oficiales</button>
-    <button data-filter="direct">Señales directas</button>
-    <button data-filter="news">Noticias</button>
-    <button data-filter="regional">Regionales</button>
-    <button data-filter="faith">Fe</button>
+<div class="toolbar" role="search">
+  <div class="search">
+    <div class="field"><input id="q" type="search" placeholder="Buscar canal, ciudad o categoría (atajo: /)" autocomplete="off" aria-label="Buscar canal, ciudad o categoría"></div>
+    <div class="seg" role="group" aria-label="Tipo de enlace">
+      <button type="button" data-src="all" aria-pressed="true">Todos</button>
+      <button type="button" data-src="official" aria-pressed="false">Sitios oficiales</button>
+      <button type="button" data-src="direct" aria-pressed="false">Señales directas</button>
+    </div>
   </div>
+  <div class="chips" id="chips" role="group" aria-label="Filtrar por tema"></div>
+</div>
+<p class="status" id="status" role="status" aria-live="polite"></p>
+
+<section class="group" id="sec-official" aria-labelledby="h-official">
+  <h2 id="h-official">Sitios oficiales <span id="c-official"></span></h2>
+  <p>Cada botón lleva a la página de transmisión del medio. La disponibilidad puede variar por horario, derechos de emisión y ubicación.</p>
+  <ul class="list" id="list-official"></ul>
+</section>
+
+<section class="group" id="sec-direct" aria-labelledby="h-direct">
+  <h2 id="h-direct">Señales directas <span id="c-direct"></span></h2>
+  <p>Enlaces de reproducción HLS (.m3u8) tomados de la playlist local <code>tv_cr.m3u</code>. Pueden cambiar sin aviso, no estar activos las 24 horas o tener geobloqueo.</p>
+  <details class="help">
+    <summary>Cómo ver una señal directa</summary>
+    <p>Pulsa «Copiar URL» y pégala en un reproductor compatible con HLS, como VLC (Medio → Abrir ubicación de red) o una app IPTV. Muchos navegadores no reproducen archivos .m3u8 al abrirlos directamente.</p>
+  </details>
+  <ul class="list" id="list-direct"></ul>
+</section>
+
+<div class="empty" id="empty" hidden>
+  <p id="empty-msg"></p>
+  <button type="button" class="btn" id="reset">Quitar filtros</button>
 </div>
 
-<section class="section">
-  <h2>Sitios oficiales</h2>
-  <p>Enlaces directos a la página de transmisión de cada medio. La disponibilidad puede variar por horario, derechos de emisión y ubicación.</p>
-  <div class="grid" id="official-grid"></div>
-</section>
-
-<section class="section">
-  <h2>Señales directas de la playlist local</h2>
-  <p>Enlaces de reproducción HLS. Pueden requerir un reproductor compatible, cambiar sin aviso, no estar activas las 24 horas o tener geobloqueo.</p>
-  <div class="grid" id="direct-grid"></div>
-  <div class="empty" id="empty">No se encontraron canales con ese criterio.</div>
-</section>
-
-<div class="note"><strong>Importante:</strong> este archivo funciona como índice de enlaces y no aloja ni retransmite contenido. Los nombres y URLs pertenecen a sus respectivos operadores. Si un enlace falla, abre la página principal del medio o revisa la programación oficial.</div>
-
-<footer class="footer">
-  <strong>Fuentes consultadas:</strong> <a href="https://www.teletica.com/vivo" target="_blank" rel="noopener">Teletica</a> · <a href="https://www.repretel.com/envivo-canal6/" target="_blank" rel="noopener">Repretel</a> · <a href="https://sinartdigital.com/envivo-canaltrece" target="_blank" rel="noopener">SINART</a> · <a href="https://www.telediario.cr/television" target="_blank" rel="noopener">Telediario</a> · <a href="https://ticoelectronica.com/television-en-vivo-costa-rica/" target="_blank" rel="noopener">Directorio de referencia</a>.<br>
-  Verificación documental realizada el 10 de noviembre de 2026. No se certifica emisión continua ni recepción en todas las zonas del país.
+<footer>
+  <p><strong>Fuentes consultadas:</strong> <a href="https://www.teletica.com/vivo" target="_blank" rel="noopener">Teletica</a>, <a href="https://www.repretel.com/envivo-canal6/" target="_blank" rel="noopener">Repretel</a>, <a href="https://sinartdigital.com/envivo-canaltrece" target="_blank" rel="noopener">SINART</a>, <a href="https://www.telediario.cr/television" target="_blank" rel="noopener">Telediario</a> y <a href="https://ticoelectronica.com/television-en-vivo-costa-rica/" target="_blank" rel="noopener">un directorio de referencia</a>.</p>
+  <p>Este archivo es un índice de enlaces: no aloja ni retransmite contenido, y los nombres y URL pertenecen a sus operadores. No se certifica emisión continua ni recepción en todas las zonas del país. Si un enlace falla, abre la página principal del medio o revisa su programación oficial.</p>
 </footer>
 </main>
 <script>
@@ -67,8 +145,21 @@ const official = [
  {n:'TV Sur',c:'Noticias · Regional',l:'Pérez Zeledón',u:'https://www.tvsur.co.cr/envivo/',d:'Señal y contenidos de la zona sur.',k:'regional'},
  {n:'Quince UCR',c:'Universitaria · Cultural',l:'Nacional',u:'https://quince.ucr.ac.cr/',d:'Sitio oficial de televisión universitaria UCR.',k:'all'},
  {n:'Enlace',c:'Cristiana',l:'Internacional',u:'https://www.enlace.org/envivo/',d:'Señal cristiana en español.',k:'faith'},
- {n:'Canal 1 Costa Rica',c:'General',l:'Nacional',u:'https://canal1cr.com/',d:'Sitio del canal y sus contenidos.',k:'all'},
- {n:'Costa Rica Channel',c:'Cultura · Turismo',l:'Nacional',u:'https://costaricachannel.tv/',d:'Programación cultural y turística.',k:'regional'}
+ {n:'Canal 1 Costa Rica',c:'General',l:'Nacional',u:'https://canal1cr.com/senal-en-vivo/',d:'Señal en vivo y noticias del canal.',k:'all'},
+ {n:'Costa Rica Channel',c:'Cultura · Turismo',l:'Nacional',u:'https://costaricachannel.tv/',d:'Programación cultural y turística.',k:'regional'},
+ {n:'Nicoya TV',c:'Regional · General',l:'Nicoya · Guanacaste',u:'https://www.nicoyatv.com/',d:'Canal regional con señal en vivo desde Nicoya.',k:'regional'},
+ {n:'TV Santa Cruz',c:'Regional · General',l:'Santa Cruz · Guanacaste',u:'https://www.facebook.com/TVSantaCruzCR/',d:'Canal regional de Santa Cruz y Guanacaste.',k:'regional'},
+ {n:'CTV Limón',c:'Regional · Caribe',l:'Limón',u:'https://ctvlimon.com/',d:'Canal digital del Caribe con sección de señal en vivo.',k:'regional'},
+ {n:'Caribe TVCR',c:'Regional · General',l:'Guápiles · Limón',u:'https://caribetv.cr/',d:'Canal de televisión online del Caribe de Costa Rica.',k:'regional'},
+ {n:'Zurquí TV',c:'Regional · Noticias',l:'Guápiles · Limón',u:'http://zurquitv.com/',d:'Canal regional con programación y sección en vivo.',k:'regional'},
+ {n:'Radio Puerto TV',c:'Regional · General',l:'Puntarenas',u:'https://radiopuertotv.net/',d:'Medio audiovisual regional con TV en vivo.',k:'regional'},
+ {n:'CBTV Canal 12',c:'Regional · General',l:'Coto Brus',u:'https://cotobrustv.com/',d:'Señal regional en vivo de Coto Brus.',k:'regional'},
+ {n:'San Vito Televisión',c:'Regional · General',l:'San Vito · Coto Brus',u:'https://www.sanvito-television.com/',d:'Canal local con señal desde San Vito.',k:'regional'},
+ {n:'Colosal Radio & Televisión',c:'Regional · Noticias',l:'Zona Sur',u:'https://colosalstereo.com/',d:'Medio regional con sección de señales en vivo.',k:'regional'},
+ {n:'UNED Videocomunicación · Canales 1–3',c:'Universitaria · Educativa',l:'Nacional',u:'https://www.uned.ac.cr/dpmd/vicom/',d:'Canales académicos y transmisiones institucionales de la UNED.',k:'all'},
+ {n:'Telefides',c:'Católica · Formación',l:'Nacional',u:'https://telefides.com/',d:'Canal católico de Costa Rica con sección En Vivo.',k:'faith'},
+ {n:'San José TV · Radio Fides',c:'Católica · Formación',l:'San José',u:'https://radiofides.co.cr/programacion/',d:'Señal de televisión de la Arquidiócesis de San José.',k:'faith'},
+ {n:'Enlace Plus',c:'Cristiana',l:'Internacional',u:'https://enlace.plus/live',d:'Plataforma oficial de señal cristiana en español.',k:'faith'}
 ];
 const direct = [
  ['360 RFTV','General','https://acceso.mediosdecostarica.com:3638/live/360rftvcrlive.m3u8','Costa Rica'],
@@ -113,11 +204,69 @@ const direct = [
  ['XperTV','Entretenimiento','http://45.163.139.42:8000/play/a02x/index.m3u8','Costa Rica'],
  ['Zurqui TV','Regional','https://videoserver.tmcreativos.com:19360/gesfnvpamn/gesfnvpamn.m3u8','Costa Rica']
 ];
+
+const NAT=['Nacional','Costa Rica','Internacional','San José','Gran Área Metropolitana'];
+const TOPICS={news:'Noticias',regional:'Regionales',faith:'Fe',edu:'Cultura y educación',ent:'Entretenimiento',sports:'Deportes',general:'General'};
+const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-function card(x,type){let n,c,u,l,d,k;if(type==='official'){({n,c,u,l,d,k}=x)}else{[n,c,u,l]=x;d='Enlace HLS directo tomado de tv_cr.m3u';k=c.toLowerCase().includes('fe')?'faith':c.toLowerCase().includes('not')?'news':c.toLowerCase().includes('reg')?'regional':'all'}return `<article class="card" data-type="${type}" data-kind="${k}" data-text="${esc((n+' '+c+' '+l).toLowerCase())}"><div class="top"><span class="tag ${type}">${type==='official'?'Sitio oficial':'Señal directa'}</span><span class="location">${esc(l)}</span></div><h3>${esc(n)}</h3><p>${esc(d)}<br><small>${esc(c)}</small></p><div class="actions"><a href="${esc(u)}" target="_blank" rel="noopener noreferrer">Abrir señal</a>${type==='direct'?`<a class="secondary" href="${esc(u)}" target="_blank" rel="noopener noreferrer">URL HLS</a>`:''}</div></article>`}
-const og=document.querySelector('#official-grid'),dg=document.querySelector('#direct-grid');og.innerHTML=official.map(x=>card(x,'official')).join('');dg.innerHTML=direct.map(x=>card(x,'direct')).join('');
-let filter='all';const search=document.querySelector('#search');document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render()}));search.addEventListener('input',render);
-function render(){const q=search.value.trim().toLowerCase();let visible=0;document.querySelectorAll('.card').forEach(c=>{const okFilter=filter==='all'||c.dataset.type===filter||c.dataset.kind===filter;const okQuery=!q||c.dataset.text.includes(q);const show=okFilter&&okQuery;c.style.display=show?'flex':'none';if(show)visible++});document.querySelector('#empty').style.display=visible?'none':'block'}
+function topicsOf(c,l){const t=[];
+ if(/notici|informa/i.test(c))t.push('news');
+ if(/regional|caribe/i.test(c)||!NAT.includes(l))t.push('regional');
+ if(/\bfe\b|cristian|cat[oó]lic/i.test(c))t.push('faith');
+ if(/universit|educativ|cultur|formaci/i.test(c))t.push('edu');
+ if(/entreten/i.test(c))t.push('ent');
+ if(/deport/i.test(c))t.push('sports');
+ if(/general/i.test(c))t.push('general');
+ return t}
+const items=[
+ ...official.map(x=>({src:'official',name:x.n.replace(/ · /g,' '),cat:x.c,loc:x.l,url:x.u,desc:x.d})),
+ ...direct.map(([n,c,u,l])=>({src:'direct',name:n,cat:c,loc:l,url:u}))
+].map(it=>{
+ it.topics=topicsOf(it.cat,it.loc);
+ const m=it.name.match(/Canal(?:es)? (\d+(?:–\d+)?)/);
+ it.num=m?m[1]:null;if(!it.num&&/Canal Trece/.test(it.name))it.num='13';
+ it.ini=it.name.replace(/[^\p{L}\p{N} ]/gu,'').trim().split(/\s+/).slice(0,2).map((w,i,a)=>a.length>1?w[0]:w.slice(0,2)).join('').toUpperCase();
+ it.hay=norm([it.name,it.cat,it.loc,it.topics.map(t=>TOPICS[t]).join(' ')].join(' '));
+ return it});
+
+function rowHTML(it,i){
+ const dial=it.num?`<div class="dial${it.num.length>2?' long':''}" aria-hidden="true">${esc(it.num)}</div>`:`<div class="dial ini" aria-hidden="true">${esc(it.ini)}</div>`;
+ const meta=`<span>${esc(it.cat.replace(/ · /g,', '))}</span><span class="pill">${esc(it.loc)}</span>${it.src==='direct'&&it.url.startsWith('http:')?'<span class="pill warn" title="Esta señal no usa conexión cifrada">Sin HTTPS</span>':''}`;
+ const open=`<a class="btn${it.src==='official'?' primary':''}" href="${esc(it.url)}" target="_blank" rel="noopener noreferrer" aria-label="${it.src==='official'?'Abrir sitio de':'Abrir señal de'} ${esc(it.name)}">${it.src==='official'?'Abrir sitio':'Abrir'}</a>`;
+ const copy=it.src==='direct'?`<button type="button" class="btn primary" data-copy="${i}" aria-label="Copiar URL de ${esc(it.name)}">Copiar URL</button>`:'';
+ return `<li class="row" data-i="${i}">${dial}<div class="info"><h3>${esc(it.name)}</h3><p class="meta">${meta}</p>${it.desc?`<p class="desc">${esc(it.desc)}</p>`:''}</div><div class="acts">${copy}${open}</div></li>`}
+['official','direct'].forEach(s=>{document.getElementById('list-'+s).innerHTML=items.map((it,i)=>it.src===s?rowHTML(it,i):'').join('')});
+const total={official:official.length,direct:direct.length};
+document.getElementById('n-official').textContent=total.official;
+document.getElementById('n-direct').textContent=total.direct;
+
+const chips=document.getElementById('chips');
+const counts=Object.fromEntries(Object.keys(TOPICS).map(t=>[t,items.filter(i=>i.topics.includes(t)).length]));
+chips.innerHTML=`<button type="button" class="chip" data-topic="all" aria-pressed="true">Todos los temas</button>`+Object.entries(TOPICS).map(([k,v])=>`<button type="button" class="chip" data-topic="${k}" aria-pressed="false">${v}<small>${counts[k]}</small></button>`).join('');
+
+const q=document.getElementById('q');let src='all',topic='all';
+const rows=[...document.querySelectorAll('.row')];
+function render(){
+ const term=norm(q.value.trim());const shown={official:0,direct:0};
+ rows.forEach(r=>{const it=items[r.dataset.i];
+  const ok=(src==='all'||it.src===src)&&(topic==='all'||it.topics.includes(topic))&&(!term||term.split(/\s+/).every(w=>it.hay.includes(w)));
+  r.hidden=!ok;if(ok)shown[it.src]++});
+ ['official','direct'].forEach(s=>{
+  document.getElementById('sec-'+s).hidden=!shown[s];
+  document.getElementById('c-'+s).textContent=shown[s]===total[s]?total[s]:shown[s]+' de '+total[s]});
+ const n=shown.official+shown.direct;
+ document.getElementById('status').textContent=n?`Mostrando ${n} de ${items.length} enlaces`:'';
+ const e=document.getElementById('empty');e.hidden=!!n;
+ if(!n)document.getElementById('empty-msg').textContent=q.value.trim()?`Ningún canal coincide con «${q.value.trim()}». Prueba con otro nombre o quita los filtros.`:'Ningún canal coincide con esos filtros.'}
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{src=b.dataset.src;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()}));
+chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;topic=b.dataset.topic;chips.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));render()});
+q.addEventListener('input',render);
+document.getElementById('reset').addEventListener('click',()=>{q.value='';src='all';topic='all';document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.src==='all'));chips.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.topic==='all'));render();q.focus()});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();q.focus()}});
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;const url=items[b.dataset.copy].url;
+ try{await navigator.clipboard.writeText(url)}catch{const t=document.createElement('textarea');t.value=url;document.body.append(t);t.select();document.execCommand('copy');t.remove()}
+ const old=b.textContent;b.textContent='Copiado';setTimeout(()=>{b.textContent=old},1800)});
+render();
 </script>
 </body>
 </html>

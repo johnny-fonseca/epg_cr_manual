@@ -1,1 +1,2 @@
-https://acceso.mediosdecostarica.com:3638/live/360rftvcrlive.m3u8
+https://5eac7b031d945.streamlock.net/TELEFIDES/TELEFIDES/chunklist_w195875729.m3u8
+https://5eac7b031d945.streamlock.net/TELEFIDES/TELEFIDES/playlist.m3u8
