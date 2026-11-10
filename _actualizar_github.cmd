@@ -62,6 +62,8 @@ set "TS="
 set "PS_ARGS="
 set "PS_EXTRA="
 set "RC=0"
+set "GIT_SSL_ARGS=-c http.sslBackend=openssl"
+set "GIT_CREDENTIAL_ARGS="
 
 rem ---------- Lectura de argumentos ----------
 :parse_args
@@ -148,6 +150,37 @@ call :log "Git encontrado fuera del PATH, se agrego temporalmente."
 :git_ok
 for /f "delims=" %%V in ('git --version 2^>nul') do call :log "%%V"
 
+rem ---------- 5b. GitHub CLI y autenticacion (opcional) ----------
+rem Si gh esta instalado y no hay sesion, se intenta autenticar solo en modo
+rem interactivo. Con /nopause se evita abrir un flujo que podria quedar esperando
+rem al usuario; el script continua y mostrara el error real del remoto.
+where gh.exe >nul 2>&1
+if errorlevel 1 goto :gh_auth_done
+gh auth status --hostname github.com >nul 2>&1
+if not errorlevel 1 (
+    call :log "GitHub CLI autenticado para github.com."
+    gh auth setup-git --hostname github.com >nul 2>&1
+    if errorlevel 1 (call :log "ADVERTENCIA: no se pudo configurar Git globalmente; se usara el helper por invocacion.")
+    set GIT_CREDENTIAL_ARGS=-c "credential.helper=^!gh auth git-credential"
+    call :log "Git configurado para usar las credenciales de gh y OpenSSL."
+    goto :gh_auth_done
+)
+if "%NOPAUSE%"=="1" (
+    call :log "ADVERTENCIA: gh no esta autenticado. Para habilitarlo ejecute: gh auth login"
+    goto :gh_auth_done
+)
+call :log "gh no esta autenticado; iniciando gh auth login en el navegador..."
+gh auth login --hostname github.com --git-protocol https --web
+if errorlevel 1 (
+    call :log "ADVERTENCIA: gh auth login no se completo; se continuara con Git Credential Manager."
+) else (
+    call :log "Autenticacion de gh completada."
+    gh auth setup-git --hostname github.com >nul 2>&1
+    set GIT_CREDENTIAL_ARGS=-c "credential.helper=^!gh auth git-credential"
+    call :log "Git configurado para usar las credenciales de gh y OpenSSL."
+)
+:gh_auth_done
+
 rem ---------- 6. Repositorio ----------
 git rev-parse --is-inside-work-tree >nul 2>&1
 if errorlevel 1 goto :err_repo
@@ -197,7 +230,7 @@ set "GIT_HTTP_LOW_SPEED_TIME=15"
 set "NET_TRY=0"
 :net_loop
 set /a NET_TRY+=1
-git ls-remote --heads "%REMOTE_NAME%" >nul 2>&1
+git %GIT_SSL_ARGS% %GIT_CREDENTIAL_ARGS% ls-remote --heads "%REMOTE_NAME%" >nul 2>&1
 if not errorlevel 1 goto :net_pass
 if %NET_TRY% GEQ %NET_RETRIES% goto :err_net
 call :log "Sin respuesta del remoto. Reintento %NET_TRY% de %NET_RETRIES% en %NET_WAIT% s..."

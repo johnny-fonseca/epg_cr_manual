@@ -97,6 +97,7 @@ $script:CodigoSalida = 0
 $script:Bloqueo      = $null
 $script:LogPs        = $ArchivoLog
 $script:Paso         = 0
+$script:UsarGhCredential = $false
 $script:Dir          = $PSScriptRoot
 if ([string]::IsNullOrWhiteSpace($script:Dir)) {
     $script:Dir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -194,7 +195,11 @@ function Invoke-Git {
     # La confianza se aplica solo a esta invocacion; no modifica la
     # configuracion global ni la del repositorio. Esto permite ejecutar el
     # script aunque la cuenta actual no sea la propietaria de la carpeta.
-    $argumentosGit = @('-c', ('safe.directory={0}' -f $script:Dir)) + $Argumentos
+    # OpenSSL evita el fallo de Schannel SEC_E_NO_CREDENTIALS en algunos
+    # entornos Windows. Si gh esta autenticado, usa su helper sin imprimir el PAT.
+    $configGit = @('-c', ('safe.directory={0}' -f $script:Dir), '-c', 'http.sslBackend=openssl')
+    if ($script:UsarGhCredential) { $configGit += @('-c', 'credential.helper=!gh auth git-credential') }
+    $argumentosGit = $configGit + $Argumentos
     Write-Verbose ('git ' + (Hide-Credenciales ($argumentosGit -join ' ')))
 
     $previo = $ErrorActionPreference
@@ -459,6 +464,14 @@ function Invoke-Principal {
     if (-not (Find-Git)) {
         Stop-Script 30 'Git no esta instalado o no esta disponible en PATH.' `
             'Instale Git for Windows desde https://git-scm.com/download/win y vuelva a intentarlo.'
+    }
+    $gh = Get-Command gh -CommandType Application -ErrorAction SilentlyContinue
+    if ($null -ne $gh) {
+        & $gh.Source auth status --hostname github.com *> $null
+        if ($LASTEXITCODE -eq 0) {
+            $script:UsarGhCredential = $true
+            Write-Log 'GitHub CLI autenticado; se usara su helper de credenciales con OpenSSL.' 'DETALLE'
+        }
     }
     Write-Log ((Invoke-Git @('--version')).Texto.Trim()) 'DETALLE'
 
