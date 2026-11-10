@@ -1,4 +1,4 @@
-#EXTM3U x-tvg-url="https://epgshare01.online/epgshare01/epg_ripper_CR1.xml.gz,https://raw.githubusercontent.com/johnny-fonseca/epg-cr-manual/main/epg_manual_cr.xml"
+#EXTM3U x-tvg-url="https://epgshare01.online/epgshare01/epg_ripper_CR1.xml.gz,https://raw.githubusercontent.com/johnny-fonseca/epg_cr_manual/main/epg_manual_cr.xml"
 
 #EXTINF:-1 tvg-id="360RFTV.cr@SD" tvg-name="360 RFTV" tvg-country="CR" tvg-language="Spanish" tvg-logo="https://i.imgur.com/EBtgnxR.png" group-title="General",360 RFTV (576p) [Geo-blocked]
 https://acceso.mediosdecostarica.com:3638/live/360rftvcrlive.m3u8
