@@ -1,0 +1,863 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Frecuencias TDT de Costa Rica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400..600&display=swap">
+<style>
+/* Layout: barra de navegación fija, portada oscura con ficha técnica, mapa del espectro 7–51 que actúa como índice visual de la tabla de canales, y bloques de normativa, verificación y fuentes. */
+:root{
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --bg:#f2f4f8; --surface:#ffffff; --sunk:#eaeef5;
+  --ink:#0e1829; --ink-2:#2b3a52; --muted:#56667e;
+  --line:#d8dfea; --line-2:#c3cddd;
+  --accent:#2457d6; --accent-ink:#ffffff; --accent-soft:#e1eafd;
+  --tdt:#0e8566; --tdt-soft:#d9f2e9; --tdt-ink:#0a5e48;
+  --rad:#a35f00; --rad-soft:#fbecc9; --rad-ink:#7a4800;
+  --imt:#c24156; --imt-soft:#fbe0e5; --imt-ink:#8c2234;
+  --on-solid:#ffffff;
+  --hero-a:#0a1a31; --hero-b:#12356a; --hero-ink:#f2f6fd; --hero-muted:#b6c5de;
+  --hero-line:rgba(255,255,255,.1); --hero-tile:rgba(255,255,255,.07); --hero-tile-line:rgba(255,255,255,.16);
+  --shadow:0 1px 2px rgba(14,24,41,.04),0 14px 34px -16px rgba(14,24,41,.22);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0a111d; --surface:#111a2b; --sunk:#0d1626;
+    --ink:#e8eef9; --ink-2:#c5d0e4; --muted:#93a2bb;
+    --line:#22304a; --line-2:#30415f;
+    --accent:#7ca3ff; --accent-ink:#0a111d; --accent-soft:#17274b;
+    --tdt:#3ecf9f; --tdt-soft:#123a32; --tdt-ink:#7ae6c3;
+    --rad:#f0a53a; --rad-soft:#3a2c12; --rad-ink:#f6c473;
+    --imt:#f07388; --imt-soft:#3d1b25; --imt-ink:#f7a1b0;
+    --on-solid:#07130f;
+    --hero-a:#0d1c35; --hero-b:#143a6e;
+    --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 16px 34px -18px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0a111d; --surface:#111a2b; --sunk:#0d1626;
+  --ink:#e8eef9; --ink-2:#c5d0e4; --muted:#93a2bb;
+  --line:#22304a; --line-2:#30415f;
+  --accent:#7ca3ff; --accent-ink:#0a111d; --accent-soft:#17274b;
+  --tdt:#3ecf9f; --tdt-soft:#123a32; --tdt-ink:#7ae6c3;
+  --rad:#f0a53a; --rad-soft:#3a2c12; --rad-ink:#f6c473;
+  --imt:#f07388; --imt-soft:#3d1b25; --imt-ink:#f7a1b0;
+  --on-solid:#07130f;
+  --hero-a:#0d1c35; --hero-b:#143a6e;
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 16px 34px -18px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--bg);color:var(--ink);font:400 15.5px/1.6 var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.wrap{max-width:1200px;margin-inline:auto;padding-left:max(clamp(16px,4vw,32px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,4vw,32px),env(safe-area-inset-right,0px))}
+
+.tdt{--h:var(--tdt);--hs:var(--tdt-soft);--hi:var(--tdt-ink)}
+.rad{--h:var(--rad);--hs:var(--rad-soft);--hi:var(--rad-ink)}
+.imt{--h:var(--imt);--hs:var(--imt-soft);--hi:var(--imt-ink)}
+
+/* Navegación */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:20px;height:56px}
+.brand{display:flex;align-items:center;gap:10px;font:700 16px var(--f-display);color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand-mark{display:inline-flex;align-items:flex-end;gap:2px;height:20px}
+.brand-mark i{display:block;width:3px;border-radius:2px;background:var(--tdt)}
+.brand-mark i:nth-child(1){height:8px}.brand-mark i:nth-child(2){height:14px}.brand-mark i:nth-child(3){height:20px;background:var(--accent)}.brand-mark i:nth-child(4){height:11px}.brand-mark i:nth-child(5){height:16px}
+.nav-links{display:flex;gap:4px;margin-left:auto;overflow-x:auto;min-width:0;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14px;padding:7px 12px;border-radius:8px;white-space:nowrap;transition:background .15s,color .15s}
+.nav-links a:hover{color:var(--ink);background:var(--sunk)}
+.nav-links a[aria-current="true"]{color:var(--accent);background:var(--accent-soft)}
+
+/* Portada */
+.hero{position:relative;overflow:hidden;color:var(--hero-ink);background:radial-gradient(900px 360px at 92% -8%,rgba(62,207,159,.18),transparent 62%),linear-gradient(160deg,var(--hero-a),var(--hero-b))}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:110px;pointer-events:none;background:repeating-linear-gradient(90deg,var(--hero-line) 0 1px,transparent 1px 18px);-webkit-mask-image:linear-gradient(to top,#000,transparent);mask-image:linear-gradient(to top,#000,transparent)}
+.hero-in{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:end;padding-block:clamp(44px,7vw,92px) clamp(52px,7vw,96px)}
+.eyebrow{margin:0 0 18px;font:600 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--hero-muted)}
+h1{margin:0 0 20px;font:700 clamp(2.5rem,6.4vw,4.8rem)/1.02 var(--f-display);letter-spacing:-.025em;text-wrap:balance;font-optical-sizing:auto}
+.lede{margin:0;max-width:56ch;font-size:clamp(1rem,1.5vw,1.15rem);color:var(--hero-muted)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font:600 14.5px var(--f-body);text-decoration:none;border:1px solid var(--hero-tile-line);color:var(--hero-ink);background:transparent;transition:transform .15s,background .15s}
+.btn:hover{background:var(--hero-tile);transform:translateY(-1px)}
+.btn.primary{background:#f2f6fd;color:#0a1a31;border-color:transparent}
+.btn.primary:hover{background:#ffffff}
+.hero-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0}
+.hs{background:var(--hero-tile);border:1px solid var(--hero-tile-line);border-radius:14px;padding:18px 18px 16px;backdrop-filter:blur(6px);min-width:0}
+.hs dt{font:700 clamp(1.8rem,3.4vw,2.6rem)/1 var(--f-display);letter-spacing:-.02em;margin:0 0 8px;color:#fff}
+.hs dd{margin:0;font-size:13.5px;line-height:1.4;color:var(--hero-muted)}
+.hs.big{grid-column:1/-1;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.hs.big dt{margin:0;font-size:clamp(3rem,6vw,4.6rem)}
+.hs.big dd{max-width:22ch;font-size:15px}
+
+/* Secciones */
+.sec{padding-block:clamp(44px,6.5vw,84px)}
+.sec.alt{background:var(--sunk);border-block:1px solid var(--line)}
+.sec-head{max-width:760px;margin-bottom:clamp(24px,3.4vw,40px)}
+.kicker{margin:0 0 10px;font:600 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h2{margin:0 0 12px;font:650 clamp(1.7rem,3.6vw,2.6rem)/1.1 var(--f-display);letter-spacing:-.02em;text-wrap:balance}
+h3{margin:0 0 8px;font:650 1.15rem/1.25 var(--f-display);letter-spacing:-.01em}
+.sec-lede{margin:0;color:var(--muted);font-size:1.02rem;max-width:62ch}
+p{margin:0 0 12px}
+
+/* Mapa del espectro */
+.spec-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(16px,2.4vw,28px);box-shadow:var(--shadow)}
+.spec-scroll{overflow-x:auto;padding-bottom:8px}
+.spec{min-width:860px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr)) 28px repeat(38,minmax(0,1fr));column-gap:3px;row-gap:6px;align-items:start}
+.z{border-top:3px solid var(--h);padding-top:6px;font:600 10.5px var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--hi);white-space:nowrap;overflow:hidden}
+.cell{appearance:none;display:block;width:100%;height:68px;padding:0;border:0;border-radius:4px;cursor:pointer;background:var(--hs);transition:transform .15s,box-shadow .15s}
+.cell.st-ident,.cell.st-na{background:var(--h)}
+.cell.st-noof{background:repeating-linear-gradient(135deg,var(--h) 0 2.5px,var(--hs) 2.5px 6px)}
+.cell.st-ley{background:var(--hs);box-shadow:inset 0 0 0 2px var(--h)}
+.cell:hover,.cell:focus-visible{transform:translateY(-4px);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ink)}
+.cn{font:500 10px var(--f-mono);letter-spacing:-.04em;text-align:center;color:var(--muted)}
+.brk{grid-row:2;height:68px;width:2px;margin-inline:auto;background:repeating-linear-gradient(180deg,var(--line-2) 0 4px,transparent 4px 9px)}
+.tk{grid-row:4;font:500 10.5px var(--f-mono);color:var(--muted);white-space:nowrap}
+.tk.r{text-align:right}
+.spec-note{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
+.readout{display:flex;align-items:center;gap:16px;min-height:84px;margin-top:18px;padding:14px 16px;background:var(--sunk);border:1px solid var(--line);border-radius:12px}
+.ro-n{flex:none;display:grid;place-items:center;min-width:56px;height:56px;padding-inline:6px;border-radius:12px;background:var(--hs);color:var(--hi);font:600 26px var(--f-mono)}
+.ro-b{min-width:0;flex:1}
+.ro-t{margin:0 0 2px;font-weight:600}
+.ro-m{margin:0;font-size:13.5px;color:var(--muted)}
+.ro-go{flex:none;font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
+.ro-hint{margin:0;color:var(--muted);font-size:14px}
+.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 32px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.lg-t{margin:0 0 10px;font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lg-l{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0;padding:0;list-style:none}
+.lg-l li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2)}
+.lg-l b{font:500 12px var(--f-mono);color:var(--muted)}
+.sw{flex:none;width:18px;height:18px;border-radius:4px;background:var(--h)}
+.sw.st-noof{background:repeating-linear-gradient(135deg,var(--h) 0 2.5px,var(--hs) 2.5px 6px)}
+.sw.st-ley{background:var(--hs);box-shadow:inset 0 0 0 2px var(--h)}
+.sw.st-sin{background:var(--hs)}
+
+.callout{margin-top:28px;padding:20px 22px;background:var(--rad-soft);border:1px solid var(--line-2);border-radius:14px;color:var(--ink)}
+.pill{display:inline-block;margin-right:8px;padding:2px 10px;border-radius:999px;background:var(--rad);color:var(--on-solid);font:600 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;vertical-align:1px}
+.callout p{margin:0;max-width:78ch}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.tile{padding:20px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--h);border-radius:14px}
+.tile-k{display:block;margin-bottom:8px;font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--hi)}
+.tile p{margin:0 0 8px;color:var(--ink-2);font-size:14.5px}
+.tile p:last-child{margin:0}
+
+/* Tabla */
+.toolbar{display:grid;gap:14px;margin-bottom:16px}
+.tb-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.search{position:relative;flex:1 1 280px;min-width:0}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+.search input{width:100%;padding:12px 14px 12px 42px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);color:var(--ink);font:400 15px var(--f-body)}
+.search input::placeholder{color:var(--muted)}
+.count{font-size:13.5px;color:var(--muted);white-space:nowrap}
+.count b{color:var(--ink);font-family:var(--f-mono);font-weight:600}
+.reset{appearance:none;border:0;background:none;padding:6px 4px;color:var(--accent);font:600 13.5px var(--f-body);cursor:pointer}
+.filters{display:flex;flex-wrap:wrap;gap:12px 28px}
+.fgroup{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.fgroup>span{font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.chip{appearance:none;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);color:var(--ink-2);font:500 13.5px var(--f-body);cursor:pointer;transition:background .15s,border-color .15s}
+.chip:hover{border-color:var(--accent)}
+.chip b{font:500 12px var(--f-mono);color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip[aria-pressed="true"] b{color:inherit;opacity:.8}
+.tbl-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.tbl{width:100%;border-collapse:separate;border-spacing:0}
+.tbl thead th{padding:13px 16px;background:var(--sunk);border-bottom:1px solid var(--line);text-align:left;font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tbl td{padding:16px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tr.ch:hover td{background:var(--sunk)}
+.tbl tr.grp td{padding:11px 16px;background:var(--sunk);border-bottom:1px solid var(--line);font:600 12px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--hi)}
+.tbl tr.grp em{font-style:normal;margin-left:10px;color:var(--muted);letter-spacing:.02em;text-transform:none;font-weight:500}
+.tbl tr.empty td{padding:40px 16px;text-align:center;color:var(--muted)}
+.c-n{width:76px}
+.num{display:inline-grid;place-items:center;min-width:46px;height:46px;border-radius:12px;background:var(--hs);color:var(--hi);font:600 18px var(--f-mono)}
+.c-band{width:70px;font-weight:600}
+.c-range{width:132px;white-space:nowrap}
+.c-car{width:164px;white-space:nowrap}
+.c-attr{width:150px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.tag{padding:2px 8px;border-radius:6px;font:600 10.5px var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+.tag.law{background:var(--accent-soft);color:var(--accent)}
+.tag.unof{background:var(--rad-soft);color:var(--rad-ink)}
+.sigs{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.sig{display:inline-flex;align-items:stretch;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;background:var(--surface)}
+.sig-n{padding:4px 10px;font-weight:600}
+.sig-v{display:flex;align-items:center;gap:2px;padding:4px 9px;border-left:1px solid var(--line-2);background:var(--sunk);color:var(--ink-2);font:500 12px var(--f-mono)}
+.sig-v sup{color:var(--rad);font-weight:700;font-size:13px;line-height:0}
+.lead{margin:0;font-weight:600}
+.lead.dim{color:var(--muted);font-weight:500}
+.sub{margin:3px 0 0;font-size:14px;color:var(--ink-2)}
+.sigs+.sub{margin-top:8px}
+.note{margin:6px 0 0;max-width:64ch;font-size:13px;line-height:1.5;color:var(--muted)}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--hs);color:var(--hi);font:600 12px var(--f-body);white-space:nowrap}
+tr.ch.flash td{background:var(--accent-soft);animation:flash 2.6s ease-out forwards}
+@keyframes flash{0%,40%{background:var(--accent-soft)}100%{background:transparent}}
+
+/* Notas */
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+.note-card{padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:0}
+.note-card h3{font-size:1rem}
+.note-card p{margin:0 0 8px;font-size:14px;color:var(--ink-2)}
+.note-card p:last-child{margin:0}
+.marks{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:20px;font-size:13.5px;color:var(--muted)}
+.marks b{color:var(--rad);font-size:15px}
+
+/* Verificación */
+.verif{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.vcard{padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:0}
+.vcard p{font-size:14.5px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chips-l{margin:14px 0 6px;font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.chip-ch{appearance:none;min-width:42px;padding:5px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--hs);color:var(--hi);font:600 13px var(--f-mono);cursor:pointer;transition:transform .15s}
+.chip-ch:hover{transform:translateY(-2px);border-color:var(--h)}
+
+/* Normativa */
+.norm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ncard{display:flex;flex-direction:column;padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:0}
+.ncard .tile-k{color:var(--accent)}
+.ncard p{font-size:14.5px;color:var(--ink-2)}
+.ncard p:last-child{margin-bottom:0}
+.status{display:inline-block;margin-bottom:12px;padding:3px 10px;border-radius:999px;background:var(--imt-soft);color:var(--imt-ink);font:600 12px var(--f-body);align-self:flex-start}
+.offers{display:grid;gap:8px;margin:4px 0 14px;padding:0;list-style:none}
+.offers li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--ink-2)}
+.offers span{width:92px}
+.offers i{display:inline-block;width:22px;height:12px;margin-right:4px;border-radius:3px;background:var(--accent)}
+.chain{margin:0;padding:0;list-style:none;display:grid;gap:0}
+.chain li{position:relative;padding:0 0 16px 28px;font-size:14.5px;color:var(--ink-2)}
+.chain li:last-child{padding-bottom:0}
+.chain li::before{content:"";position:absolute;left:0;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.chain li::after{content:"";position:absolute;left:5.5px;top:20px;bottom:-4px;width:1px;background:var(--line-2)}
+.chain li:last-child::after{display:none}
+.chain b{display:block;color:var(--ink)}
+.law-l{margin:0 0 12px;padding:0;list-style:none;display:grid;gap:10px}
+.law-l li{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--line);font-size:14.5px}
+.law-l li:last-child{border-bottom:0;padding-bottom:0}
+.law-l b{font-family:var(--f-mono);font-weight:600;color:var(--tdt-ink)}
+.law-l span{color:var(--muted);font-size:13.5px;text-align:right}
+
+/* Fuentes */
+.src-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.src-g{padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:0}
+.src-g h3{margin-bottom:6px}
+.src-g ul{margin:0;padding:0;list-style:none}
+.src-g li{padding:12px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.src-g li:first-child{border-top:0}
+.src-g a{font-weight:600}
+.src-g a::after{content:" ↗";font-weight:400;font-size:.85em}
+.foot{margin:36px 0 0;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);max-width:90ch}
+.top-link{display:inline-block;margin-top:14px;font-weight:600;font-size:14px}
+
+@media (max-width:980px){
+  .hero-in{grid-template-columns:minmax(0,1fr);align-items:start}
+  .trio,.notes,.norm{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:820px){
+  .tbl thead{display:none}
+  .tbl,.tbl tbody{display:block}
+  .tbl tr.ch{display:flex;flex-wrap:wrap;gap:12px 14px;padding:16px;border-bottom:1px solid var(--line)}
+  .tbl tr.ch:last-child{border-bottom:0}
+  .tbl tr.ch td{display:block;padding:0;border:0;background:none}
+  .tbl tr.ch:hover td{background:none}
+  .tbl tr.ch .c-n{width:auto;flex:none}
+  .tbl tr.ch .c-sig{flex:1 1 calc(100% - 66px);min-width:0}
+  .tbl tr.ch .c-band,.tbl tr.ch .c-range,.tbl tr.ch .c-car,.tbl tr.ch .c-attr{width:auto;flex:1 1 calc(50% - 8px);min-width:0;white-space:normal;font-weight:400;font-size:14px}
+  .tbl tr.ch .c-band{font-weight:600}
+  .tbl tr.ch .c-band::before,.tbl tr.ch .c-range::before,.tbl tr.ch .c-car::before,.tbl tr.ch .c-attr::before{content:attr(data-label);display:block;margin-bottom:2px;font:600 10.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .tbl tr.grp{display:block}
+  .tbl tr.grp td{display:block}
+  tr.ch.flash{background:var(--accent-soft);animation:flash 2.6s ease-out forwards}
+  .legend{grid-template-columns:minmax(0,1fr)}
+  .verif,.src-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .trio,.notes,.norm{grid-template-columns:minmax(0,1fr)}
+  .nav-in{gap:10px}
+  .brand span.b-t{display:none}
+  .readout{flex-wrap:wrap}
+  .hs.big dd{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  tr.ch.flash td,tr.ch.flash{background:var(--accent-soft)}
+}
+</style>
+
+<nav class="nav" aria-label="Secciones">
+  <div class="wrap nav-in">
+    <a class="brand" href="#inicio" aria-label="Inicio">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="b-t">TDT Costa Rica</span>
+    </a>
+    <div class="nav-links">
+      <a href="#espectro">Espectro</a>
+      <a href="#canales">Canales</a>
+      <a href="#verificacion">Verificación</a>
+      <a href="#normativa">Normativa</a>
+      <a href="#fuentes">Fuentes</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="wrap hero-in">
+    <div>
+      <p class="eyebrow">ISDB-Tb · canales de 6 MHz · corte 9 nov 2026</p>
+      <h1>Frecuencias de TDT en Costa Rica</h1>
+      <p class="lede">Plan de canalización RF para televisión digital terrestre ISDB-Tb en Costa Rica. La tabla separa las frecuencias físicas de 6 MHz, los canales virtuales que muestra el televisor y las asignaciones registradas. Corte de consulta: 9 de noviembre de 2026; las señales no representan una medición en vivo de cobertura.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#canales">Ver lista de canales</a>
+        <a class="btn" href="#espectro">Mapa del espectro</a>
+      </div>
+    </div>
+    <dl class="hero-stats" aria-label="Resumen">
+      <div class="hs big"><dt>30</dt><dd>canales físicos atribuidos a TDT (7–36)</dd></div>
+      <div class="hs"><dt>7–13</dt><dd>VHF: 174–216 MHz</dd></div>
+      <div class="hs"><dt>14–36</dt><dd>UHF: 470–608 MHz</dd></div>
+      <div class="hs" style="grid-column:1/-1"><dt>ISDB-Tb</dt><dd>estándar adoptado por Costa Rica</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main>
+<section class="sec" id="espectro">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Mapa del espectro</p>
+      <h2>Canales físicos 7 al 51 · plan RF</h2>
+      <p class="sec-lede">Cada celda es un canal físico de 6 MHz. El color indica la atribución del PNAF y el relleno resume el nivel de documentación disponible para cada señal. Toque o haga clic en un canal para ir a su fila en la tabla.</p>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-scroll"><div class="spec" id="spec" role="group" aria-label="Mapa de canales físicos 7 a 51"></div></div>
+      <p class="spec-note">El mapa omite 216–470 MHz, que el PNAF no canaliza para TDT. RA: radioastronomía.</p>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <div class="legend">
+        <div>
+          <p class="lg-t">Atribución PNAF</p>
+          <ul class="lg-l">
+            <li class="tdt"><span class="sw"></span>TDT (7–36)</li>
+            <li class="rad"><span class="sw"></span>Radioastronomía (37)</li>
+            <li class="imt"><span class="sw"></span>IMT 600 MHz (38–51)</li>
+          </ul>
+        </div>
+        <div class="tdt">
+          <p class="lg-t">Estado de la señal</p>
+          <ul class="lg-l">
+            <li><span class="sw"></span>Señal identificada <b id="n-ident"></b></li>
+            <li><span class="sw st-noof"></span>Fuente no oficial † <b id="n-noof"></b></li>
+            <li><span class="sw st-ley"></span>Asignado por ley, sin señal propia <b id="n-ley"></b></li>
+            <li><span class="sw st-sin"></span>Sin señal identificada <b id="n-sin"></b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><span class="pill">Importante</span>Que un televisor o una antena pueda sintonizar canales 7–51 no significa que todos estén atribuidos actualmente a TDT. El PNAF vigente atribuye a TDT de acceso libre los físicos 7–13 y 14–36 (CTR 012). El 37 es radioastronomía y 38–51 pertenecen a la banda móvil/IMT; las señales que aún se reporten allí dependen de títulos preexistentes y sus disposiciones transitorias.</p>
+    </div>
+    <div class="trio">
+      <article class="tile tdt">
+        <span class="tile-k">Canales 7–36</span>
+        <h3>TDT de acceso libre</h3>
+        <p>VHF 7–13 (174–216 MHz) y UHF 14–36 (470–608 MHz). Es la única canalización del Apéndice 1 del PNAF.</p>
+      </article>
+      <article class="tile rad">
+        <span class="tile-k">Canal 37 · 608–614 MHz</span>
+        <h3>Radioastronomía</h3>
+        <p>El canal 37 está atribuido a radioastronomía.</p>
+      </article>
+      <article class="tile imt">
+        <span class="tile-k">Canales 38–51 · 614–698 MHz</span>
+        <h3>Móvil para IMT</h3>
+        <p>Banda de 600 MHz. Dejaron de estar atribuidos a radiodifusión y se atribuyen al servicio móvil para IMT (nota CTR 014): no pueden otorgarse nuevas concesiones de TV allí, y las concesiones anteriores conservan sus condiciones técnicas según el Transitorio 1 del decreto.</p>
+        <p>Las señales reportadas en esos canales corresponden a concesiones previas a la reforma y no forman parte de la canalización TDT vigente; conviene confirmar su estado en el RNT/SUTEL.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="canales">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Lista completa</p>
+      <h2>Lista completa de canales físicos</h2>
+      <p class="sec-lede">Busque por canal, banda, MHz o nombre de señal, o combine los filtros para acotar la lista.</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="tb-top">
+        <label class="search" for="filter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="filter" type="search" placeholder="Filtrar por canal, banda o MHz…" aria-label="Filtrar tabla" autocomplete="off">
+        </label>
+        <span class="count" id="count" aria-live="polite"></span>
+        <button class="reset" id="reset" type="button" hidden>Limpiar filtros</button>
+      </div>
+      <div class="filters">
+        <div class="fgroup" role="group" aria-label="Filtrar por bloque" id="f-block"><span>Bloque</span></div>
+        <div class="fgroup" role="group" aria-label="Filtrar por estado de la señal" id="f-sig"><span>Señal</span></div>
+      </div>
+    </div>
+
+    <div class="tbl-card">
+      <table class="tbl" id="channels">
+        <thead><tr><th>Canal físico</th><th>Nombre de señal / canal virtual</th><th>Banda</th><th>Rango del canal</th><th>Centro RF / portadora OFDM</th><th>Atribución PNAF</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="marks" aria-label="Marcas de la tabla">
+      <span><b>†</b> fuente no oficial</span>
+      <span><b>*</b> por confirmar en el RNT/SUTEL</span>
+      <span>Número en mono: canal virtual del televisor</span>
+    </div>
+
+    <div class="notes">
+      <article class="note-card">
+        <h3>Canal físico y canal virtual</h3>
+        <p>El canal físico es un bloque RF de 6 MHz. El canal virtual es el número lógico que aparece en el televisor. Por ejemplo, Teletica se identifica comercialmente como Canal 7, pero su transmisión digital está en el físico 18 (494–500 MHz).</p>
+      </article>
+      <article class="note-card">
+        <h3>Los números no son siempre frecuencias</h3>
+        <p>El 23.1 de Enlace es un canal virtual, no el físico 23: Mediápolis ubica Enlace y EJTV en el físico 32. Tampoco deben confundirse las posiciones de una parrilla de cable con canales RF de televisión abierta.</p>
+      </article>
+      <article class="note-card">
+        <h3>Reutilización del físico 26</h3>
+        <p>El Registro Nacional de Telecomunicaciones contiene títulos distintos asociados al físico 26: Canal 4 y un repetidor de Repretel 6 con cobertura histórica en San José, Pérez Zeledón y zonas aledañas, además de otras áreas. No significa que ambos se reciban simultáneamente desde un mismo punto; el uso depende de la zona y del título habilitante.</p>
+      </article>
+      <article class="note-card">
+        <h3>Discrepancias en el físico 19</h3>
+        <p>Telered figura en el físico 19. La ficha de Mediápolis ubica también allí a Telesistema y Urbano TV, pero con números virtuales que se solapan; publicaciones del sitio oficial de Urbano TV en 2026 anuncian el virtual 19.2, mientras la ficha de Mediápolis conserva 12.2. Se marca la discrepancia para no presentarla como una multiplexación plenamente verificada.</p>
+      </article>
+      <article class="note-card">
+        <h3>Reservas legales de SINART</h3>
+        <p>SINART tiene reservados por Ley 8346 los físicos 8, 10, 13 y 20. SUTEL indicó en 2025 que opera solamente el físico 20, dentro del cual mantiene tres servicios virtuales. Por eso los físicos 8, 10 y 13 aparecen como reservas legales sin señal propia identificada.</p>
+      </article>
+      <article class="note-card">
+        <h3>Canales fuera de 7–36</h3>
+        <p>Los físicos 38–51 están dentro de la banda 614–698 MHz atribuida a IMT, no a nuevas concesiones de TDT. OPA (38), Telefides (40), Extra TV (42) e Impact Channel (43) aparecen en fichas públicas como servicios preexistentes; su situación debe leerse junto con el régimen transitorio y verificarse en el RNT/SUTEL.</p>
+      </article>
+      <article class="note-card">
+        <h3>Frecuencia central y portadora OFDM</h3>
+        <p>La frecuencia central del canal en el plan de canalización es el punto medio del bloque de 6 MHz (por ejemplo, 497 MHz para el físico 18). El Apéndice 1 permite desplazar positivamente la frecuencia central de las portadoras OFDM en 1/7 MHz (142,857 kHz): la tabla muestra ambos valores por separado.</p>
+      </article>
+      <article class="note-card">
+        <h3>Señal documentada no equivale a recepción garantizada</h3>
+        <p>Las fichas de medios y los títulos habilitantes describen una asignación o una configuración publicada; no certifican que la señal esté encendida hoy ni que llegue con suficiente potencia a cada distrito. Para una comprobación local, haga una búsqueda automática y contraste el resultado con el RNT/SUTEL.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="verificacion">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Metodología</p>
+      <h2>Cómo se verificó la lista</h2>
+      <p class="sec-lede">Corte de consulta: 9 de noviembre de 2026. Toque un número de canal para ir a su fila.</p>
+    </div>
+    <div class="verif">
+      <article class="vcard tdt">
+        <h3>Asignaciones respaldadas por ley</h3>
+        <p>UCR: canal físico 15. UNED: canal físico 21. SINART: canales físicos 8, 10, 13 y 20; SUTEL confirmó que la operación de SINART se concentra en el físico 20.</p>
+        <div class="chips" data-chs="15,21,8,10,13,20"></div>
+      </article>
+      <article class="vcard rad">
+        <h3>Qué significa la marca †</h3>
+        <p>La marca † señala listados antiguos, reportes no oficiales o asociaciones cuya presencia RF no pudo corroborarse con una ficha reciente. La marca * señala discrepancias o datos virtuales que requieren confirmación individual en el RNT/SUTEL o mediante recepción directa.</p>
+      </article>
+      <article class="vcard tdt">
+        <h3>Físicos sin señal propia identificada</h3>
+        <p class="chips-l" style="margin-top:0">Sin señal digital propia identificada</p>
+        <div class="chips" data-chs="7,9,11,12,16,17,23,25,31,33,35"></div>
+        <p class="chips-l">Reservas legales sin señal propia identificada</p>
+        <div class="chips" data-chs="8,10,13,21"></div>
+      </article>
+      <article class="vcard imt">
+        <h3>Casos que requieren lectura regional</h3>
+        <p>El físico 26 figura en más de un título habilitante (Canal 4 y repetidor de Repretel 6). En el 19 hay discrepancias entre las fichas de Telered, Telesistema y Urbano TV. Los físicos 28, 29 y 44 conservan referencias de distintas épocas que no deben mezclarse con parrillas de cable.</p>
+        <div class="chips" data-chs="19,26,28,29,44"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="normativa">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Marco normativo</p>
+      <h2>Marco normativo y estado al 9 de noviembre de 2026</h2>
+    </div>
+    <div class="norm">
+      <article class="ncard">
+        <span class="tile-k">PNAF</span>
+        <h3>Plan Nacional de Atribución de Frecuencias</h3>
+        <p>Decreto Ejecutivo 44010-MICITT (16-mar-2023; La Gaceta 95, 30-may-2023), reformado en materia de TDT por el Decreto 44789-MICITT (12-nov-2024; Alcance 196, 5-dic-2024). El Decreto 45769-MICITT (10-abr-2026; Alcance 45, La Gaceta 78, 29-abr-2026) actualizó otros artículos del PNAF; no sustituyó la canalización televisiva 7–36 establecida en CTR 012.</p>
+        <p>En la versión vigente consultada, CTR 012 atribuye a TDT de acceso libre ISDB-Tb los canales 7–13 (174–216 MHz) y 14–36 (470–608 MHz). Son 30 canales físicos de 6 MHz; la tabla de frecuencias de la página se calcula a partir de esos bloques.</p>
+      </article>
+      <article class="ncard">
+        <span class="tile-k">608–698 MHz</span>
+        <h3>Radioastronomía y banda de 600 MHz</h3>
+        <p><strong>608–614 MHz (canal 37):</strong> radioastronomía exclusiva (CTR 013). <strong>614–698 MHz (canales 38–51):</strong> servicio móvil para redes IMT (CTR 014); no son parte de la canalización TDT de nuevas asignaciones.</p>
+        <p>El Transitorio I del Decreto 44789-MICITT preserva, bajo sus condiciones y plazo, títulos de televisión preexistentes en los segmentos indicados. Esto no convierte los físicos 38–51 en canales disponibles para nuevas concesiones TDT: cada caso debe revisarse en su expediente del RNT/SUTEL. La reforma 45769-MICITT de abril de 2026 no cambió esta separación de bandas para televisión.</p>
+      </article>
+      <article class="ncard">
+        <span class="tile-k">Vigencia</span>
+        <h3>Vigencia de las concesiones</h3>
+        <ol class="chain">
+          <li><b>Decreto 44539-MICITT</b>Amplió las concesiones 15 meses, hasta el 28-sep-2025.</li>
+          <li><b>Decreto 45195-MICITT (18-sep-2025)</b>Las extendió hasta después del proceso electoral 2026.</li>
+          <li><b>Decreto 45671-MICITT (La Gaceta, 27-mar-2026)</b>Fijó la vigencia, desde el 28-jun-2024, hasta la firmeza de las decisiones que pongan término a los concursos.</li>
+        </ol>
+      </article>
+      <article class="ncard">
+        <span class="tile-k">Concurso</span>
+        <h3>Concurso de frecuencias</h3>
+        <span class="status">Anulado · suspendido</span>
+        <p>La licitación 2025LY-000003-SUTEL (TV abierta, VHF 7–13 y UHF 14–36) recibió cuatro ofertas nacionales:</p>
+        <ul class="offers" aria-label="Ofertas recibidas">
+          <li><span>Repretel</span><div><i></i><i></i></div>×2</li>
+          <li><span>Teletica</span><div><i></i></div>×1</li>
+          <li><span>Extra Net</span><div><i></i></div>×1</li>
+        </ul>
+        <p>La Sala Constitucional anuló el proceso (sentencia 2026-007626, 27-feb-2026) y ordenó nuevos concursos que incorporen pluralismo. Al 22-oct-2026 la SUTEL mantiene la página del proceso marcada como suspendida y no se encontró un nuevo concurso publicado, por lo que no hay nuevas asignaciones de canales físicos.</p>
+      </article>
+      <article class="ncard">
+        <span class="tile-k">Asignación legal</span>
+        <h3>Frecuencias asignadas por ley</h3>
+        <ul class="law-l">
+          <li><span><strong>UCR</strong> · físico</span><b>15 · Ley 8806</b></li>
+          <li><span><strong>UNED</strong> · físico</span><b>21 · Ley 8684</b></li>
+          <li><span><strong>SINART</strong> · físicos</span><b>8, 10, 13 y 20 · Ley 8346</b></li>
+        </ul>
+      </article>
+      <article class="ncard">
+        <span class="tile-k">Estándar</span>
+        <h3>Estándar y transición</h3>
+        <p>ISDB-Tb, según lo recoge el Reglamento de transición a la TDT (Decreto 36774-MINAET, 2011).</p>
+        <p>El apagón analógico concluyó el 31-ene-2023.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="fuentes">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Referencias</p>
+      <h2>Fuentes consultadas</h2>
+    </div>
+    <div class="src-grid">
+      <div class="src-g">
+        <h3>Normativa, entes oficiales y referencia técnica</h3>
+        <ul>
+          <li><a href="https://www.micitt.go.cr/sites/default/files/marco_juridico_legal/10.%20Decreto%20Ejecutivo%20N%C2%B0%2044010-MICITT%20Plan%20Nacional%20de%20Atribuci%C3%B3n%20de%20Frecuencias%20%28PNAF%29.pdf" target="_blank" rel="noopener">MICITT, PNAF (Decreto Ejecutivo 44010-MICITT, texto original de 2023)</a>: base del plan; sus notas CTR 012, CTR 013 y CTR 014 fueron modificadas por el Decreto 44789-MICITT (véase la fuente de La Gaceta, Alcance 196, en este mismo grupo).</li>
+          <li><a href="https://sutel.go.cr/sites/default/files/frecuencias/5.-reforma-al-pnaf-alca196_05_12_2024_0.pdf" target="_blank" rel="noopener">La Gaceta, Alcance 196 (5-dic-2024): Decreto 44789-MICITT</a> (copia en SUTEL): reforma específica de las notas de televisión CTR 012–014, canalización TDT 7–36 y régimen transitorio para títulos preexistentes.</li>
+          <li><a href="https://micitt.go.cr/sites/default/files/marco_juridico_legal/Decreto%20n.%C2%B0%2045769-MICITT%20MODIFICACI%C3%93N%20PARCIAL%20A%20LOS%20ART%C3%8DCULOS%204%2C%2014%2C%2015%20Y%2016%20DEL%20DECRETO.pdf" target="_blank" rel="noopener">MICITT, Decreto 45769-MICITT (29-abr-2026)</a>: actualización parcial del PNAF; se revisó para confirmar que no sustituyó la canalización de TDT descrita en CTR 012.</li>
+          <li><a href="https://www.micitt.go.cr/servicios/television-digital" target="_blank" rel="noopener">MICITT, Televisión Digital</a>: confirma el estándar Japón-Brasil y la referencia general de antenas VHF/UHF.</li>
+          <li><a href="https://www.sutel.go.cr/pagina/cambio-la-television-digital" target="_blank" rel="noopener">SUTEL, Cambio a la Televisión Digital</a>: explica la TV abierta gratuita y la compatibilidad ISDB-Tb.</li>
+          <li><a href="https://sutel.go.cr/sites/default/files/frecuencias/28e.-10136-sutel-dgc-2025-atencion-aclaraciones-extemporales-a-los-carteles.pdf" target="_blank" rel="noopener">SUTEL, oficio 10136-SUTEL-DGC-2025 (27-oct-2025)</a>: detalla las asignaciones legales de UCR (15), UNED (21) y SINART (8, 10, 13 y 20), y señala que SINART operaba solamente el físico 20 con tres servicios virtuales.</li>
+          <li><a href="https://plataformadocumental.sutel.go.cr/RNT/DocView.aspx?dbid=0&amp;id=3084468&amp;repo=RepositorioDigital" target="_blank" rel="noopener">SUTEL, expediente RNT de Corporación Costarricense de Televisión</a>: describe el físico 26 como repetidor de Repretel 6 con cobertura histórica que incluye Pérez Zeledón, y documenta el canal matriz digital 22.</li>
+          <li><a href="https://consultarntplus.sutel.go.cr/consecion_anteriors/21893/edit" target="_blank" rel="noopener">SUTEL, asiento RNT AS-003721-2016</a>: título histórico de Canal 4, adecuado del canal 4 analógico al físico 26 (542–548 MHz).</li>
+          <li><a href="https://sutel.go.cr/sites/default/files/frecuencias/ni-22713-2025-tv-cr.pdf" target="_blank" rel="noopener">SUTEL, expediente de Televisora de Costa Rica (NI-22713-2025)</a>: físico 18 (494–500 MHz), centro 497 MHz, estándar ISDB-Tb y red SFN de Teletica.</li>
+          <li><a href="https://sutel.go.cr/sites/default/files/frecuencias/12.-propuesta-remision-al-micitt-de-observaciones-precartel-06379-sutel-dgc-2025_0.pdf" target="_blank" rel="noopener">SUTEL, observaciones al precartel (06379-SUTEL-DGC-2025)</a>: recoge la observación de que SINART opera solo el físico 20, con tres canales virtuales.</li>
+          <li><a href="https://sutel.go.cr/pagina/susbasta-frecuencias-de-radio-y-television" target="_blank" rel="noopener">SUTEL, Subasta de frecuencias de Radio y Televisión (suspendida; actualizada el 22-oct-2026)</a>: anulación del proceso por la Sala Constitucional (sentencia 2026-007626) y frecuencias incluidas en el concurso.</li>
+          <li><a href="https://www.linuxtv.org/wiki/index.php/ISDB-T_Frequency_Table" target="_blank" rel="noopener">LinuxTVWiki, ISDB-T Frequency Table</a>: tabla técnica de frecuencias centrales ISDB-T de 6 MHz; se usó para la canalización numérica.</li>
+        </ul>
+      </div>
+      <div class="src-g">
+        <h3>Concurso, vigencia y contexto</h3>
+        <ul>
+          <li><a href="https://www.elfinancierocr.com/economia-y-politica/sala-constitucional-emitio-segunda-sentencia-sobre/PGURWVX3MJGMHPPSZ42OA2RFUM/story/" target="_blank" rel="noopener">El Financiero, segunda sentencia de la Sala Constitucional (21 y 30-abr-2026)</a>: ordena diseñar nuevos procesos con pluralismo.</li>
+          <li><a href="https://www.teletica.com/politica/gobierno-amplia-temporalmente-concesion-de-frecuencias-de-radio-y-television_404955" target="_blank" rel="noopener">Teletica, 27-mar-2026</a>: Decreto 45671-MICITT, vigencia de las concesiones hasta la firmeza de los concursos. <a href="https://crhoy.com/tecnologia/extienden-concesiones-de-frecuencias-de-radiodifusion/" target="_blank" rel="noopener">CRHoy</a>: Decreto 45195-MICITT.</li>
+          <li><a href="https://www.telesemana.com/blog/2026/05/07/5g-wi-fi-y-satelites-la-hoja-de-ruta-de-la-nueva-actualizacion-del-espectro-en-costa-rica/" target="_blank" rel="noopener">TeleSemana, 7-may-2026</a>: reforma parcial del PNAF por el Decreto 45769-MICITT (La Gaceta, 29-abr-2026).</li>
+          <li><a href="https://dplnews.com/?p=181090" target="_blank" rel="noopener">DPL News</a>: fin del apagón analógico el 31-ene-2023.</li>
+        </ul>
+      </div>
+      <div class="src-g">
+        <h3>Fichas de señales</h3>
+        <ul>
+          <li><a href="https://mediapolis.ucr.ac.cr/tipo-de-medios/" target="_blank" rel="noopener">Mediápolis/UCR, fichas de televisión abierta</a>: perfiles de TVN 14, Quince UCR, Teletica, Telered, Telesistema, Urbano TV, VM Latino, Canal 1, Xper TV, Enlace, EJTV, Trivisión, OPA, Telefides, Extra TV e Impact Channel.</li>
+          <li><a href="https://genteopa.com/" target="_blank" rel="noopener">Gente OPA, sitio oficial</a>: la señal se promociona como Canal 38; fuentes públicas del canal y de su cobertura la identifican específicamente como 38.1.</li>
+          <li><a href="https://mediapolis.ucr.ac.cr/medios/vm-latino/" target="_blank" rel="noopener">VM Latino</a>, <a href="https://mediapolis.ucr.ac.cr/medios/vintage-music/" target="_blank" rel="noopener">Vintage Music</a>, <a href="https://mediapolis.ucr.ac.cr/medios/urbano-tv/" target="_blank" rel="noopener">Urbano TV</a>, <a href="https://mediapolis.ucr.ac.cr/medios/telesistema/" target="_blank" rel="noopener">Telesistema</a>, <a href="https://mediapolis.ucr.ac.cr/medios/telered/" target="_blank" rel="noopener">Telered</a>, <a href="https://mediapolis.ucr.ac.cr/medios/trivision/" target="_blank" rel="noopener">Trivisión</a> y <a href="https://mediapolis.ucr.ac.cr/medios/extra-tv-42/" target="_blank" rel="noopener">Extra TV 42</a>: referencias públicas de canales físicos y virtuales.</li>
+          <li><a href="https://urbanotvcr.com/" target="_blank" rel="noopener">Urbano TV, sitio oficial</a>: publicaciones de 2026 anuncian recepción abierta en el virtual 19.2; se contrasta con la ficha de Mediápolis que conserva el 12.2.</li>
+          <li><a href="https://www.teletica.com/entretenimiento/mensajes-de-oyentes-sorprendieron-a-natalia-monge-y-rose-davis-en-primer-dia-de-asi-somos_352129" target="_blank" rel="noopener">Teletica, referencia a televisión abierta 7.2</a>: documenta Teletica Radio como servicio audiovisual en el subcanal virtual 7.2.</li>
+          <li><a href="https://mediapolis.ucr.ac.cr/medios/canal-6/" target="_blank" rel="noopener">Repretel Canal 6</a>, <a href="https://mediapolis.ucr.ac.cr/medios/canal-11/" target="_blank" rel="noopener">Repretel Canal 11</a>, <a href="https://mediapolis.ucr.ac.cr/medios/canal-4/" target="_blank" rel="noopener">Canal 4</a>, <a href="https://mediapolis.ucr.ac.cr/medios/canal-8/" target="_blank" rel="noopener">Multimedios Canal 8</a>, <a href="https://mediapolis.ucr.ac.cr/medios/ejtv/" target="_blank" rel="noopener">EJTV</a>, <a href="https://mediapolis.ucr.ac.cr/medios/telefides-canal-40/" target="_blank" rel="noopener">Telefides</a> e <a href="https://mediapolis.ucr.ac.cr/medios/impact-channel/" target="_blank" rel="noopener">Impact Channel</a>: fichas de canal físico/virtual.</li>
+        </ul>
+      </div>
+      <div class="src-g">
+        <h3>Listados y reportes no oficiales</h3>
+        <ul>
+          <li><a href="https://tvdcr.blogspot.com/" target="_blank" rel="noopener">TDT Costa Rica (página no oficial, 2018)</a>, <a href="https://televisiondigital.maemaemae.xyz/lista-canales-tv-digital/" target="_blank" rel="noopener">Canales de TV digital en Costa Rica</a> y <a href="https://www.crhoy.com/nacionales/enlace-repretel-telgobierno-lo-apoya-enlace-repretel-teleplus-y-teletica-tendran-64-canales-de-tv-en-diciembreeplus-y-teletica-tendran-64-canales-de-tv-en-diciembre/" target="_blank" rel="noopener">CRHoy (2017)</a>: reparto de frecuencias por concesionario y reportes de canal físico usados para las filas marcadas con †. <a href="https://es.wikipedia.org/wiki/ISDB-T" target="_blank" rel="noopener">Wikipedia, ISDB-T</a>: canales virtuales de Bethel, Canal 9 y otros.</li>
+          <li><a href="https://www.micitt.go.cr/sites/default/files/2023-06/pptmesa2.pdf" target="_blank" rel="noopener">MICITT, presentación del grupo temático de espectro (2023)</a>: canales virtuales reportados (información no oficial, a partir de reportes de recepción). <a href="https://semanariouniversidad.com/?p=159543" target="_blank" rel="noopener">Semanario Universidad (2019)</a>: concesiones por canal UHF según expedientes de la SUTEL.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot">Actualizado con la versión vigente del PNAF y fichas públicas consultadas al 9 de noviembre de 2026. Las frecuencias son las del plan; la disponibilidad real depende de la concesión, transmisor y zona de recepción. “Canal físico” no equivale necesariamente al número que aparece como canal virtual o marca comercial de una televisora.<br><a class="top-link" href="#inicio">Volver arriba ↑</a></p>
+  </div>
+</section>
+</main>
+
+<script>
+(function(){
+  var CH=[
+    {n:7,s:'sin',t:'Sin señal digital propia identificada',note:'No confundir el físico 7 (174–180 MHz) con el Canal 7 comercial: Teletica transmite digitalmente por el físico 18.'},
+    {n:8,s:'ley',law:'Ley 8346',ent:'SINART',t:'Reserva legal de SINART',sub:'sin señal propia identificada',note:'SINART tiene reservados los físicos 8, 10, 13 y 20; SUTEL indica que opera solamente el 20.'},
+    {n:9,s:'sin',t:'Sin señal digital propia identificada',note:'El antiguo Canal 9 analógico no equivale a una señal digital confirmada en el físico 9.'},
+    {n:10,s:'ley',law:'Ley 8346',ent:'SINART',t:'Reserva legal de SINART',sub:'sin señal propia identificada'},
+    {n:11,s:'sin',t:'Sin señal digital propia identificada',note:'El antiguo Canal 11 analógico se identifica actualmente en el físico 34.'},
+    {n:12,s:'sin',t:'Sin señal digital propia identificada'},
+    {n:13,s:'ley',law:'Ley 8346',ent:'SINART',t:'Reserva legal de SINART',sub:'sin señal propia identificada',note:'Canal 13/SINART se recibe como servicio virtual en el físico 20; no es una emisión propia confirmada en RF 210–216 MHz.'},
+    {n:14,s:'ident',sigs:[['TVN Canal 14','14']],note:'Ficha de Mediápolis: físico 14 y virtual 14; cobertura abierta reportada en Zona Norte.'},
+    {n:15,s:'ident',law:'Ley 8806',ent:'UCR',sigs:[['Quince UCR','15']],note:'Asignación legal a UCR; físico 15, 476–482 MHz.'},
+    {n:16,s:'sin',t:'Sin señal digital propia identificada',note:'La asignación legal de UNED es el físico 21, no el 16.'},
+    {n:17,s:'noof',t:'Referencia histórica de concesión',sub:'sin señal actual confirmada',note:'Listados antiguos atribuyen este físico a Otoche SRL; no se encontró una ficha pública reciente que confirme una señal digital.'},
+    {n:18,s:'ident',sigs:[['Teletica / Canal 7','7.01–7.08'],['Teletica Radio','7.2','*']],note:'Confirmado por SUTEL: físico 18, 494–500 MHz, centro RF 497 MHz. El título contempla 7.01–7.08 full-seg y 7.31–7.38 one-seg; 7.2 para Teletica Radio procede de referencias públicas.'},
+    {n:19,s:'ident',sigs:[['Telered','19'],['Urbano TV','19.2'],['Telesistema','19.2','*']],note:'Telered: físico 19/virtual 19. Urbano TV anuncia 19.2 en su web en 2026; Mediápolis aún muestra 12.2. Mediápolis también lista Telesistema en 19.2: virtuales solapados por verificar.'},
+    {n:20,s:'ident',law:'Ley 8346',ent:'SINART',sigs:[['SINART / Canal 13','13.x · 3 servicios']],note:'SUTEL confirma que este es el único físico que SINART opera, con tres servicios virtuales. El canal 13 es el identificador de marca/servicio, no RF 13.'},
+    {n:21,s:'ley',law:'Ley 8684',ent:'UNED',t:'Asignado por ley a la UNED',sub:'sin señal propia identificada',note:'Físico 21, 512–518 MHz. La asignación legal no implica que se esté transmitiendo actualmente.'},
+    {n:22,s:'ident',sigs:[['Repretel Canal 6','6']],note:'Registro SUTEL/RNT documenta la matriz digital de Corporación Costarricense de Televisión en el físico 22 (518–524 MHz).'},
+    {n:23,s:'sin',t:'Sin señal digital propia identificada',note:'El 23.1 de Enlace es canal virtual; la ficha de Mediápolis sitúa Enlace en el físico 32, no en RF 23.'},
+    {n:24,s:'ident',sigs:[['VM Latino','12.1'],['Soy Plancha TV','12.2','*'],['Vintage Music','12.3','*']],note:'VM Latino: físico 24 / virtual 12.1. Soy Plancha y Vintage Music se muestran como asociaciones reportadas al múltiplex, pero su físico específico no queda confirmado en sus fichas públicas.'},
+    {n:25,s:'noof',t:'Referencia histórica de concesión',sub:'señal actual no confirmada',note:'Listados antiguos atribuyen este físico a Otoche SRL; no se verificó una señal digital abierta actual.'},
+    {n:26,s:'ident',sigs:[['Canal 4','4'],['Repretel 6 · repetidor regional','6','*']],note:'Dos expedientes distintos citan 542–548 MHz (físico 26): Canal 4 fue adecuado a este bloque y SUTEL registra un repetidor de Repretel 6 con zona histórica que incluye Pérez Zeledón. No asumir que ambos se reciben en el mismo lugar.'},
+    {n:27,s:'ident',sigs:[['Canal 1','1.1']],note:'Ficha de Mediápolis: físico 27 y virtual 1.1.'},
+    {n:28,s:'noof',t:'Referencia histórica: Multimedios / Teleritmo',sub:'sin señal actual confirmada',note:'Reportes antiguos ubican Multimedios en el físico 28; otros listados posteriores lo sitúan en el 44. No se confirma aquí una transmisión actual en RF 28.'},
+    {n:29,s:'noof',sigs:[['Canal 2 / CDR','2','*']],note:'El RNT conserva una adecuación del canal 2 analógico al físico 29 (560–566 MHz). La vigencia de la emisión digital y el canal virtual actual deben verificarse; una posición en cable no demuestra uso de RF 29.'},
+    {n:30,s:'ident',sigs:[['Xper TV','10']],note:'Ficha de Mediápolis: físico 30 y virtual 10.'},
+    {n:31,s:'sin',t:'Sin señal digital propia identificada',note:'Se han publicado nombres virtuales 31.x sin una identificación fiable del físico.'},
+    {n:32,s:'ident',sigs:[['Enlace Costa Rica','23.1'],['EJTV','23.3']],note:'Fichas de Mediápolis: ambos servicios comparten el físico 32; 23.1 y 23.3 son virtuales.'},
+    {n:33,s:'noof',t:'Referencia histórica de concesión',sub:'sin señal actual confirmada',note:'Listados antiguos relacionaban este físico con Teletica; su transmisión digital documentada está en el físico 18.'},
+    {n:34,s:'ident',sigs:[['Repretel Canal 11','11']],note:'Las fichas y registros públicos relacionan el servicio Canal 11 con el físico 34 (590–596 MHz).'},
+    {n:35,s:'noof',t:'Referencia histórica de concesión',sub:'sin señal actual confirmada',note:'Listados antiguos relacionaban este físico con Enlace; su ficha actual lo ubica en el físico 32.'},
+    {n:36,s:'ident',sigs:[['Trivisión','36.1']],note:'Ficha de Mediápolis: físico 36 y programación principal virtual 36.1.'},
+    {n:37,s:'na',t:'Radioastronomía · sin TDT',note:'608–614 MHz; atribución exclusiva a radioastronomía (CTR 013).'},
+    {n:38,s:'ident',sigs:[['OPA / Gente ¡Opa!','38.1','*']],note:'Ficha pública de OPA ubica la señal en el físico 38. Está fuera del bloque actual 7–36 y debe leerse como servicio/título preexistente sujeto al régimen transitorio.'},
+    {n:39,s:'noof',sigs:[['Canal 9','9.1','*']],note:'Referencia de recepción/listados de 2018; no se encontró confirmación reciente de operación por RF 39.'},
+    {n:40,s:'ident',sigs:[['Telefides Canal 40','40','*']],note:'Ficha pública de Mediápolis: físico 40 y virtual 40. Está fuera del bloque TDT actual; verificar la vigencia de su título.'},
+    {n:41,s:'noof',t:'Referencia histórica de concesión',sub:'fuera del bloque TDT',note:'Listados antiguos atribuían este físico a Enlace; la ficha pública actual ubica Enlace en el físico 32.'},
+    {n:42,s:'ident',sigs:[['Extra TV','42.1'],['Extra Radio','42.2','*']],note:'Mediápolis identifica Extra TV en el físico 42 y virtual 42.1. Extra Radio 42.2 se conserva como referencia pendiente de confirmación.'},
+    {n:43,s:'ident',sigs:[['Impact Channel','43.1','*']],note:'Ficha pública de Mediápolis: físico 43 y principal 43.1. Se encuentra en banda IMT, fuera de la canalización TDT vigente.'},
+    {n:44,s:'noof',t:'Referencia histórica: Multimedios',sub:'sin señal actual confirmada · banda IMT',note:'Listados/reportes antiguos han situado Multimedios en el físico 44. No equivale a una asignación TDT nueva ni confirma que siga transmitiendo hoy.'},
+    {n:45,s:'sin',t:'Sin señal TDT vigente',note:'656–662 MHz; banda móvil/IMT, fuera del bloque de TDT de libre acceso.'},
+    {n:46,s:'noof',t:'Referencia histórica de concesión',sub:'fuera del bloque TDT',note:'Listados antiguos mencionan una concesión de Repretel; no se confirma una transmisión TDT actual en este físico.'},
+    {n:47,s:'sin',t:'Sin señal TDT vigente',note:'668–674 MHz; banda móvil/IMT.'},
+    {n:48,s:'sin',t:'Sin señal TDT vigente',note:'674–680 MHz; banda móvil/IMT.'},
+    {n:49,s:'noof',sigs:[['TVPlus','25.502','*']],note:'Referencia no oficial de 2018; no se verificó una emisión actual ni su asociación exacta al físico 49.'},
+    {n:50,s:'noof',sigs:[['Bethel Costa Rica','50.1','*']],note:'Referencia histórica no oficial; el físico exacto y la operación actual no están confirmados.'},
+    {n:51,s:'sin',t:'Sin señal TDT vigente',note:'692–698 MHz; banda móvil/IMT, fuera del bloque de TDT de libre acceso.'}
+  ];
+  var ATTR_L={tdt:'TDT',rad:'Radioastronomía',imt:'IMT 600 MHz'};
+  var ST_L={ident:'Señal o asignación documentada',noof:'Referencia histórica/no oficial †',ley:'Reserva legal sin señal propia',sin:'Sin señal identificada',na:'No aplica'};
+  var BY={};
+  function $(s){return document.querySelector(s)}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')}
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  CH.forEach(function(c){
+    c.a=c.n<=36?'tdt':(c.n===37?'rad':'imt');
+    c.lo=c.n<=13?174+(c.n-7)*6:470+(c.n-14)*6;
+    c.hi=c.lo+6;
+    c.fc=(c.lo+3).toFixed(3);
+    c.car=(c.lo+3+1/7).toFixed(6);
+    c.band=c.n<=13?'VHF':'UHF';
+    BY[c.n]=c;
+    var names=(c.sigs||[]).map(function(s){return s[0]+' '+s[1]}).join(' ');
+    c.idx=norm([c.n,c.band,c.lo,c.hi,c.fc,c.car,ATTR_L[c.a],ST_L[c.s],names,c.t||'',c.sub||'',c.note||'',c.law||'',c.ent||'',(c.a==='imt'?'movil imt 600':''),(c.a==='rad'?'radioastronomia':''),(c.s==='noof'?'historico no oficial':'')].join(' '));
+  });
+
+  function summary(c){
+    if(c.sigs)return c.sigs.map(function(s){return s[0]+' ('+s[1]+')'}).join(', ');
+    return c.t+(c.sub?' · '+c.sub:'');
+  }
+
+  /* ---------- Mapa del espectro ---------- */
+  function colOf(n){return n<=13?n-6:n-5}
+  function buildSpec(){
+    var h='';
+    h+='<div class="z tdt" style="grid-column:1/8;grid-row:1">VHF · TDT</div>';
+    h+='<div class="z tdt" style="grid-column:9/32;grid-row:1">UHF · TDT</div>';
+    h+='<div class="z rad" style="grid-column:32/33;grid-row:1" title="Canal 37: radioastronomía">RA</div>';
+    h+='<div class="z imt" style="grid-column:33/47;grid-row:1">IMT · 600 MHz</div>';
+    h+='<div class="brk" style="grid-column:8" aria-hidden="true"></div>';
+    CH.forEach(function(c){
+      var col=colOf(c.n);
+      h+='<button type="button" class="cell '+c.a+' st-'+c.s+'" style="grid-column:'+col+';grid-row:2" data-n="'+c.n+'" aria-label="Canal '+c.n+', '+c.lo+' a '+c.hi+' MHz. '+esc(ST_L[c.s])+'. Ir a la tabla."></button>';
+      h+='<span class="cn" style="grid-column:'+col+';grid-row:3" aria-hidden="true">'+c.n+'</span>';
+    });
+    h+='<span class="tk" style="grid-column:1/5">174</span>';
+    h+='<span class="tk r" style="grid-column:5/8">216</span>';
+    h+='<span class="tk" style="grid-column:9/14">470</span>';
+    h+='<span class="tk r" style="grid-column:27/32">608</span>';
+    h+='<span class="tk" style="grid-column:33/38">614</span>';
+    h+='<span class="tk r" style="grid-column:42/47">698 MHz</span>';
+    $('#spec').innerHTML=h;
+  }
+  var HINT='<p class="ro-hint">Pase el cursor sobre un canal del mapa para ver el rango RF, el centro PNAF y la referencia de portadora OFDM.</p>';
+  function showReadout(n){
+    var c=BY[n];
+    $('#readout').innerHTML='<span class="ro-n '+c.a+'">'+c.n+'</span><div class="ro-b"><p class="ro-t">'+esc(summary(c))+'</p><p class="ro-m"><span class="mono">'+c.lo+'–'+c.hi+' MHz</span> · centro RF <span class="mono">'+c.fc+' MHz</span> · OFDM <span class="mono">'+c.car+' MHz</span> · '+ATTR_L[c.a]+' · '+ST_L[c.s]+'</p></div><span class="ro-go">Ver en la tabla →</span>';
+  }
+  function resetReadout(){$('#readout').innerHTML=HINT}
+  function counts(){
+    var k={ident:0,noof:0,ley:0,sin:0};
+    CH.forEach(function(c){if(k[c.s]!==undefined)k[c.s]++});
+    ['ident','noof','ley','sin'].forEach(function(s){$('#n-'+s).textContent=k[s]});
+  }
+
+  /* ---------- Tabla ---------- */
+  var GROUPS=[
+    {k:'vhf',from:7,to:13,l:'VHF',e:'Canales 7–13 · 174–216 MHz',a:'tdt'},
+    {k:'uhf',from:14,to:36,l:'UHF',e:'Canales 14–36 · 470–608 MHz',a:'tdt'},
+    {k:'out',from:37,to:51,l:'Fuera del bloque TDT',e:'Canal 37 (radioastronomía) y canales 38–51 (IMT 600 MHz) · 608–698 MHz',a:'imt'}
+  ];
+  function rowHtml(c){
+    var tags='';
+    if(c.law)tags+='<span class="tag law">'+esc(c.law)+'</span>';
+    if(c.s==='noof')tags+='<span class="tag unof" title="Fuente no oficial">† No oficial</span>';
+    var body='';
+    if(c.sigs){
+      body+='<ul class="sigs">'+c.sigs.map(function(s){
+        return '<li class="sig"><span class="sig-n">'+esc(s[0])+'</span><span class="sig-v" title="Canal virtual">'+esc(s[1])+(s[2]==='*'?'<sup title="Por confirmar en el RNT/SUTEL">*</sup>':'')+'</span></li>';
+      }).join('')+'</ul>';
+    }else{
+      body+='<p class="lead'+((c.s==='sin'||c.s==='na')?' dim':'')+'">'+esc(c.t)+'</p>';
+    }
+    if(c.sub)body+='<p class="sub">'+esc(c.sub)+'</p>';
+    if(c.note)body+='<p class="note">'+esc(c.note)+'</p>';
+    return '<tr class="ch '+c.a+'" id="ch-'+c.n+'" data-n="'+c.n+'">'+
+      '<td class="c-n"><span class="num">'+c.n+'</span></td>'+
+      '<td class="c-sig">'+(tags?'<div class="tags">'+tags+'</div>':'')+body+'</td>'+
+      '<td class="c-band" data-label="Banda">'+c.band+'</td>'+
+      '<td class="c-range" data-label="Rango del canal"><span class="mono">'+c.lo+'–'+c.hi+'</span> MHz</td>'+
+      '<td class="c-car" data-label="Centro RF / portadora OFDM"><span class="mono">'+c.fc+'</span> MHz <small>RF</small><br><span class="mono">'+c.car+'</span> MHz <small>OFDM</small></td>'+
+      '<td class="c-attr" data-label="Atribución PNAF"><span class="badge">'+ATTR_L[c.a]+'</span></td></tr>';
+  }
+  function buildTable(){
+    var h='';
+    GROUPS.forEach(function(g,i){
+      var cnt=g.to-g.from+1;
+      h+='<tr class="grp '+g.a+'" data-g="'+i+'"><td colspan="6">'+g.l+'<em>'+g.e+' · '+cnt+' canales</em></td></tr>';
+      CH.forEach(function(c){if(c.n>=g.from&&c.n<=g.to)h+=rowHtml(c)});
+    });
+    h+='<tr class="empty" id="empty" hidden><td colspan="6">Ningún canal coincide con los filtros. <button class="reset" type="button" id="reset2">Limpiar filtros</button></td></tr>';
+    $('#tbody').innerHTML=h;
+  }
+
+  var S={block:'all',sig:'all',q:''};
+  var BLOCKS=[['all','Todos'],['vhf','VHF 7–13'],['uhf','UHF 14–36'],['out','Fuera de TDT 37–51']];
+  var SIGS=[['all','Todas'],['ident','Documentada'],['noof','Histórica/no oficial †'],['ley','Por ley'],['sin','Sin señal']];
+  function inBlock(c,b){
+    if(b==='all')return true;
+    if(b==='vhf')return c.n<=13;
+    if(b==='uhf')return c.n>=14&&c.n<=36;
+    return c.n>=37;
+  }
+  function inSig(c,s){
+    if(s==='all')return true;
+    if(s==='ley')return !!c.law;
+    return c.s===s;
+  }
+  function chipCount(group,key){
+    return CH.filter(function(c){return group==='block'?inBlock(c,key):inSig(c,key)}).length;
+  }
+  function buildChips(){
+    function mk(box,list,group){
+      var el=$(box);
+      list.forEach(function(p){
+        var b=document.createElement('button');
+        b.type='button';b.className='chip';b.dataset.g=group;b.dataset.k=p[0];
+        b.setAttribute('aria-pressed',p[0]==='all'?'true':'false');
+        b.innerHTML=esc(p[1])+' <b>'+chipCount(group,p[0])+'</b>';
+        el.appendChild(b);
+      });
+    }
+    mk('#f-block',BLOCKS,'block');
+    mk('#f-sig',SIGS,'sig');
+  }
+  function match(c){
+    return inBlock(c,S.block)&&inSig(c,S.sig)&&(!S.q||c.idx.indexOf(S.q)!==-1);
+  }
+  function apply(){
+    var vis=0,perGroup=[0,0,0];
+    CH.forEach(function(c){
+      var el=document.getElementById('ch-'+c.n),ok=match(c);
+      el.hidden=!ok;
+      if(ok){vis++;GROUPS.forEach(function(g,i){if(c.n>=g.from&&c.n<=g.to)perGroup[i]++})}
+    });
+    document.querySelectorAll('tr.grp').forEach(function(r){r.hidden=perGroup[+r.dataset.g]===0});
+    $('#empty').hidden=vis!==0;
+    $('#count').innerHTML='Mostrando <b>'+vis+'</b> de <b>'+CH.length+'</b> canales';
+    var dirty=S.block!=='all'||S.sig!=='all'||S.q!=='';
+    $('#reset').hidden=!dirty;
+    document.querySelectorAll('.chip').forEach(function(b){
+      b.setAttribute('aria-pressed',String(S[b.dataset.g]===b.dataset.k));
+    });
+  }
+  function clearFilters(){
+    S={block:'all',sig:'all',q:''};
+    $('#filter').value='';
+    apply();
+  }
+  function goTo(n){
+    var el=document.getElementById('ch-'+n);
+    if(!el)return;
+    if(el.hidden)clearFilters();
+    el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    el.classList.remove('flash');
+    void el.offsetWidth;
+    el.classList.add('flash');
+    setTimeout(function(){el.classList.remove('flash')},2700);
+  }
+
+  /* ---------- Chips de canales (verificación) ---------- */
+  function buildChannelChips(){
+    document.querySelectorAll('[data-chs]').forEach(function(box){
+      box.innerHTML=box.dataset.chs.split(',').map(function(n){
+        var c=BY[+n];
+        return '<button type="button" class="chip-ch '+c.a+'" data-go="'+c.n+'" title="Canal '+c.n+': '+esc(summary(c))+'">'+c.n+'</button>';
+      }).join('');
+    });
+  }
+
+  /* ---------- Eventos ---------- */
+  buildSpec();buildTable();buildChips();buildChannelChips();counts();resetReadout();apply();
+
+  var spec=$('#spec');
+  spec.addEventListener('mouseover',function(e){var b=e.target.closest('.cell');if(b)showReadout(+b.dataset.n)});
+  spec.addEventListener('focusin',function(e){var b=e.target.closest('.cell');if(b)showReadout(+b.dataset.n)});
+  spec.addEventListener('mouseleave',resetReadout);
+  spec.addEventListener('focusout',resetReadout);
+  spec.addEventListener('click',function(e){var b=e.target.closest('.cell');if(b)goTo(+b.dataset.n)});
+  document.addEventListener('click',function(e){
+    var g=e.target.closest('[data-go]');if(g){goTo(+g.dataset.go);return}
+    var ch=e.target.closest('.chip');
+    if(ch){S[ch.dataset.g]=ch.dataset.k;apply();return}
+    if(e.target.id==='reset'||e.target.id==='reset2')clearFilters();
+  });
+  $('#filter').addEventListener('input',function(e){S.q=norm(e.target.value.trim());apply()});
+
+  /* ---------- Navegación activa ---------- */
+  if('IntersectionObserver' in window){
+    var links=[].slice.call(document.querySelectorAll('.nav-links a'));
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(l){l.removeAttribute('aria-current')});
+          links.forEach(function(l){if(l.getAttribute('href')==='#'+e.target.id)l.setAttribute('aria-current','true')});
+        }
+      });
+    },{rootMargin:'-30% 0px -60% 0px'});
+    links.forEach(function(l){var s=document.querySelector(l.getAttribute('href'));if(s)io.observe(s)});
+  }
+})();
+</script>
+
+</body></html>
